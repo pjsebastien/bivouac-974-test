@@ -3,17 +3,84 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
-        {# Run `composer require symfony/webpack-encore-bundle`
-           and uncomment the following Encore helpers to start using Symfony UX #}
-        {% block stylesheets %}
-            {#{{ encore_entry_link_tags('app') }}#}
-        {% endblock %}
 
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
+        {# <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/axentix@0.5.3/dist/css/axentix.min.css"> #}
+        {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
+    <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="">
+
+
+        <header x-data="{ mobileMenuOpen : false }" class="flex flex-wrap flex-row justify-between md:items-center md:space-x-4 bg-white py-1 px-6 relative">
+            <a href="{{ path('app_home') }}" class="block">
+                <span class="sr-only">Super Bivouac Run</span>
+                <img class="h-20 md:h-24" src="/logo/main.png" alt="bivouac 974 logo" title="Bivouac">
+            </a>
+            <button @click="mobileMenuOpen = !mobileMenuOpen" class="inline-block md:hidden w-8 h-8 bg-gray-200 text-gray-600 mt-5">
+              <svg fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+            </button>
+            <nav class="absolute md:relative top-16 left-0 md:top-0 z-20 md:flex flex-col md:flex-row md:space-x-6 font-semibold w-full md:w-auto bg-white shadow-md rounded-lg md:rounded-none md:shadow-none md:bg-transparent p-6 mt-8 md:p-0 md:mt-0"
+            :class="{ 'flex' : mobileMenuOpen , 'hidden' : !mobileMenuOpen}"  @click.away="mobileMenuOpen = false"
+            >
+                <a href="{{ path('app_home') }}" class="block py-1 text-gray-600 hover:underline" >Accueil</a>
+                <a href="{{ path('users') }}" class="block py-1 text-gray-600 hover:underline" >Profil</a>
+                <a href="{{ path('app_login') }}" class="block py-1 text-gray-600 hover:underline" >Login</a>
+                <a href="{{ path('admin_categories_ajout') }}" class="block py-1 text-gray-600 hover:underline" >Ajout Cat</a>
+                <a href="{{ path('admin_categories_home') }}" class="block py-1 text-gray-600 hover:underline" >Admin Cat</a>
+                <a href="{{ path('users_bivouacs_ajout') }}" class="block py-1 text-gray-600 hover:underline" >Ajout bivouac</a>
+                <a href="{{ path('admin_bivouacs_home') }}" class="block py-1 text-gray-600 hover:underline" >Admin bivouac</a>
+            </nav>
+        </header>
+          
+          
+
+        <main>
+            {% block body %}{% endblock %}
+            
+        </main>
+
+        <footer class="text-gray-600 body-font bg-white">
+            <div class="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
+              <a href="{{ path('app_home') }}" class="flex title-font font-medium items-center md:justify-start justify-center text-gray-900">
+                <img class="h-20" src="/logo/main.png" alt="bivouac 974 logo" title="Bivouac">
+              </a>
+              
+              <p class="text-sm text-gray-500 sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-200 sm:py-2 sm:mt-0 mt-4">Copyright © 2021 —
+                <a href="https://twitter.com/knyttneve" class="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">@Sébastien Pierrejean</a>
+              </p>
+              <span class="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start">
+                <a class="text-gray-500">
+                  <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewbox="0 0 24 24">
+                    <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"></path>
+                  </svg>
+                </a>
+                <a class="ml-3 text-gray-500">
+                  <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewbox="0 0 24 24">
+                    <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"></path>
+                  </svg>
+                </a>
+                <a class="ml-3 text-gray-500">
+                  <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewbox="0 0 24 24">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5"></rect>
+                    <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zm1.5-4.87h.01"></path>
+                  </svg>
+                </a>
+                <a class="ml-3 text-gray-500">
+                  <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="0" class="w-5 h-5" viewbox="0 0 24 24">
+                    <path stroke="none" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"></path>
+                    <circle cx="4" cy="4" r="2" stroke="none"></circle>
+                  </svg>
+                </a>
+              </span>
+            </div>
+          </footer>
+
+       
+
+        
+        
+        {% block javascripts %}{{ encore_entry_script_tags('app') }}{% endblock %}
+    <script src="{{ asset('js/scripts.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     </body>
 </html>

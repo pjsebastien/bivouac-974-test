@@ -1,0 +1,82 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gérer les bivouacs
+{% endblock %}
+
+{% block body %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/axentix@1.3.1/dist/css/axentix.min.css">
+
+	<h1>Gérer les bivouacs</h1>
+	<table class="table striped">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Titre</th>
+				<th>Date</th>
+				<th>Active</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% for bivouac in bivouacs %}
+				<tr>
+					<td>{{bivouac.id}}</td>
+					<td>{{bivouac.title}}</td>
+					<td>{{bivouac.createdAt|date}}</td>
+					<td>
+						<label class="form-switch mt-2">
+							<input id="checkbox" type="checkbox" {{ (bivouac.active) ? 'checked' : ''}} data-id="{{bivouac.id}}">
+							<span class="slider"></span>
+						</label>
+					</td>
+					<td class="text-center">
+						
+						<a href="{{ path('users_bivouacs_modifier', {id: bivouac.id})}}" class="btn shadow-1 rounded-1 blue" >Modifier</a>
+						
+						<a href="#" class="btn primary press modal-trigger" data-target="modal-delete" data-id="{{bivouac.id}}" data-titre="{{bivouac.title}}">Supprimer</a>
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+
+	<div class="modal white falling" id="modal-delete">
+		<div class="modal-header">Supprimer une annonce</div>
+		<div class="divider"></div>
+		<div class="modal-content">
+		</div>
+		<div class="divider"></div>
+		<div class="modal-footer">
+			<a href="" class="btn red">Valider</a>
+			<button data-target="modal-delete" class="ml-auto btn small primary modal-trigger">Close</button>
+		</div>
+	</div>
+{% endblock %}
+
+
+{% block javascripts %}
+<script src="https://cdn.jsdelivr.net/npm/axentix@1.3.1/dist/js/axentix.min.js"></script>
+	<script>
+		
+		window.onload = () => {
+			let modal = new Axentix.Modal('#modal-delete');
+			let activer = document.querySelectorAll("#checkbox")
+			for (let bouton of activer) {
+				bouton.addEventListener("click", function () {
+					let xmlhttp = new XMLHttpRequest;
+					xmlhttp.open("get", `/admin/bivouacs/activer/${this.dataset.id}`)
+					xmlhttp.send()
+				})
+			}
+			let supprimer = document.querySelectorAll(".modal-trigger")
+			for(let bouton of supprimer){
+				bouton.addEventListener("click", function () {
+					document.querySelector(".modal-footer a").href = `/admin/bivouacs/supprimer/${this.dataset.id}`
+					document.querySelector(".modal-content").innerText = `Êtes-vous sûr(e) de vouloir supprimer l'annonce "${this.dataset.titre}"`
+				})
+	
+			}
+		}
+	</script>
+{% endblock %}
