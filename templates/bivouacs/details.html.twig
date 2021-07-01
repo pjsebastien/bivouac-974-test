@@ -2,33 +2,29 @@
 {% block title %}{{bivouac.title}}{% endblock %}
 {% block body %}
 
-
-
+<section class="text-gray-600 body-font">
+    <div class="container mx-auto flex px-5 py-24 items-center justify-center flex-col">
     {% for image in bivouac.images %}
-        <div class="caroulix-item">
-            <img src="{{asset('uploads/' ~ image.name )|imagine_filter('carousel')}}" alt="{{bivouac.title}}" />
-        </div>
+      <img class="lg:w-2/6 md:w-3/6 w-5/6 mb-10 object-cover object-center rounded" alt="{{bivouac.title}}" src="{{asset('uploads/' ~ image.name )|imagine_filter('carousel')}}">
+    {% endfor %}  
         
-    {% endfor %}
-    
-    
-
-<div class="container ">
-    
-		<div class="">
-			
-			<div class="flex fx-col fx-grow">
-				<div class="card-header">{{bivouac.title}}</div>
-				<div class="card-content">
-                    <p>{{bivouac.categories.name}}</p>
-
-                    {# Attention la description est en html, on met le filtre striptags pour y remedier et si l'annonce est trop longue on limite le nombre de caractere on parametre avec twig string extra #}
-					<p>{{bivouac.content|striptags}}</p>
-				</div>
-			</div>
-		</div>
-
-</div>
+        <div class="text-center lg:w-2/3 w-full">
+            <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">{{bivouac.title}}</h1>
+            <div class="flex justify-center">
+                {% for region in bivouac.regions %}
+                    <a class="inline-flex items-center h-8 px-2 m-1 text-xs text-white transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-600" href="#">{{region.name}}</a>
+                {% endfor %}
+            </div>
+            <div class="flex justify-center">
+                {% for tag in bivouac.tags %} 
+                    <a class="inline-flex items-center h-5 px-2 m-1 text-xs text-black transition-colors duration-150 bg-gray-100 rounded-lg focus:shadow-outline hover:bg-gray-300" href="#">{{tag.name}}</a>       
+                {% endfor %}
+            </div>
+            <h3 class="title-font text-xl mb-4 font-medium text-gray-900">{{bivouac.categories.name}}</h3>
+            <p class="mb-8 leading-relaxed">{{bivouac.content|striptags}}</p>     
+        </div>
+    </div>
+</section>
 	
 {% endblock %}
 
