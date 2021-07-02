@@ -24,7 +24,22 @@
             <p class="mb-8 leading-relaxed">{{bivouac.content|striptags}}</p>     
         </div>
     </div>
+    {% if app.user %}
+        {{ form(comment_form) }}<br>
+    {% else %}
+        <p>Connectez vous pour écrire un commentaire !</p>
+    {% endif %}
+    
+
+    {% for comment in bivouac.comments %}
+        {{comment.user}}<br>
+        {{comment.createdAt|date("d/m/Y H:i")}}<br>
+        {{comment.text}}<br><br>
+    {% endfor %}
 </section>
+
+
+
 	
 {% endblock %}
 
