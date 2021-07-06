@@ -43,6 +43,16 @@ class BivouacsController extends AbstractController
      */
     public function supprimer(Bivouac $bivouac)
     {
+        $images = $bivouac->getImages();
+        if($images){
+            foreach ($images as $image) {
+                $nomImage = $this->getParameter("images_directory")."/".$image->getName();
+                if(file_exists($nomImage)){
+                    unlink($nomImage);
+                }
+                
+            }
+        }
         
         $em = $this->getDoctrine()->getManager();
         $em->remove($bivouac);

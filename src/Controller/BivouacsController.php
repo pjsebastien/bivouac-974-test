@@ -22,6 +22,25 @@ use Symfony\Component\Routing\Annotation\Route;
 class BivouacsController extends AbstractController
 {
     /**
+     * @Route("/", name="liste")
+     * @return void
+     */
+    public function index(BivouacRepository $bivouacsRepo, Request $request){
+        //On définit le nombre d'élément par package
+        $limit = 8;
+        //On récupère le num de page
+        $page = (int)$request->query->get("page", 1);
+        //On recup les bivouacs
+        $bivouacs = $bivouacsRepo->getPaginatedBivouac($page, $limit);
+        //On récup le total de bivouac
+        $total= $bivouacsRepo->getTotalBivouac();
+        
+        return $this->render('bivouacs/index.html.twig', compact('bivouacs', 'total', 'limit', 'page'));
+
+    }
+
+
+    /**
      * @Route("/details/{slug}", name="details")
      */
     public function details($slug, BivouacRepository $bivouacsRepo,Request $request, CommentRepository $commentRepo)

@@ -1,20 +1,110 @@
 {% extends 'base.html.twig' %}
-
-{% block title %}Hello BivouacsController!{% endblock %}
-
+{% block title %}Liste des bivouacs
+{% endblock %}
+{% block stylesheets %}
+{{ encore_entry_link_tags('app') }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" />
+{% endblock %}
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+<section class="text-gray-600 body-font">
+	
+	<div class="container px-5 py-12 mx-auto">
+	  <div class="flex flex-wrap -m-4">
+		
+	{% for bivouac in bivouacs %}
+		<div class=" sm:w-full xl:w-1/4 md:w-1/2 p-4">
+		  <div class="bg-gray-100 p-6  rounded-lg">
+			
+			<img class="h-40 rounded w-full object-cover object-center mb-6" src="{{asset('uploads/' ~ bivouac.images[0].name )|imagine_filter('square')}}" alt="{{bivouac.title}}">
+			<h3 class="tracking-widest text-green-500 text-xs font-medium title-font">{{bivouac.categories.name}}</h3>
+						
+			{% for tag in bivouac.tags %} 
+				<a class="inline-flex items-center h-5 px-2 m-1 text-xs text-black transition-colors duration-150 bg-gray-300 rounded-lg focus:shadow-outline hover:bg-gray-600" href="#">{{tag.name}}</a>
+             
+          	{% endfor %}
+			{% for region in bivouac.regions %}
+				<a class="inline-flex items-center h-8 px-2 m-1 text-xs text-white transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-600" href="#">{{region.name}}</a>
+          	{% endfor %}
 
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/pjseb/Desktop/symfonyApp/bivouacrun/src/Controller/BivouacsController.php'|file_link(0) }}">src/Controller/BivouacsController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/pjseb/Desktop/symfonyApp/bivouacrun/templates/bivouacs/index.html.twig'|file_link(0) }}">templates/bivouacs/index.html.twig</a></code></li>
-    </ul>
-</div>
+			<h2 class="text-lg text-gray-900 font-medium title-font mb-4"><a href="{{path('bivouacs_details', {slug : bivouac.slug})}}">{{bivouac.title}}</a></h2>
+			{# Attention la description est en html, on met le filtre striptags pour y remedier et si l'annonce est trop longue on limite le nombre de caractere on parametre avec twig string extra #}
+			<p class="leading-relaxed text-base h-24">{{bivouac.content|striptags|u.truncate(80, '...')}}</p>
+			<div class="text-green-600">		
+				{% if is_granted("ROLE_USER") %}
+					{% for favoris in bivouac.favoris %}
+						{% if favoris.id == app.user.id %}
+						<a href="{{path('bivouacs_retrait_favoris', {id: bivouac.id})}}">
+							<i class="fas fa-heart"></i>
+						</a>
+						{% else %}
+						<a href="{{path('bivouacs_ajout_favoris', {id: bivouac.id})}}">
+							<i class="far fa-heart"></i>
+						</a>	
+						{% endif %}
+					{% else %}
+						<a href="{{path('bivouacs_ajout_favoris', {id: bivouac.id})}}">
+							<i class="far fa-heart"></i>
+						</a>
+					{% endfor %}
+				{% else %}
+					<i class="far fa-heart"></i>	
+				{% endif %}
+				<a class="float-right" href="{{path('bivouacs_details', {slug : bivouac.slug})}}">Lire plus...</a>
+			</div>
+			
+		  </div>
+		</div>
+	{% endfor %}
+
+	
+		
+	  </div>
+	</div>
+
+	<!-- Pagination -->
+
+	{% set pages = (total/limit)|round(0, 'ceil') %}
+
+	<div class="flex flex-col items-center my-12">
+		<div class="flex text-gray-700">
+			<div class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer hover:bg-green-200 {{(page == 1) ? 'hidden' : ''}}">
+				<a href="?page=1">
+					<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left w-6 h-6">
+						<polyline points="15 18 9 12 15 6"></polyline>
+					</svg>
+				</a>				
+			</div>
+			<div class="h-12 w-12 mr-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer hover:bg-green-200 {{(page == 1) ? 'hidden' : ''}}">
+				<a href="{{ (page > 1) ? '?page=' ~ (page - 1) : ''}}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-left w-6 h-6">
+						<polyline points="15 18 9 12 15 6"></polyline>
+					</svg>
+				</a>				
+			</div>
+
+			<div class="flex h-12 font-medium rounded-full bg-gray-200">
+				{% for item in 1..(pages) %}
+				<div class="w-12 md:flex justify-center items-center hidden  cursor-pointer leading-5 transition duration-150 ease-in  rounded-full {{(page == item) ? 'bg-green-400' : ''}} hover:bg-green-200"><a href="?page={{item}}">{{item}}</a></div>					
+				{% endfor %}
+			</div>
+
+			<div class="h-12 w-12 ml-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer hover:bg-green-200 {{(page == pages) ? 'hidden' : ''}}">
+				<a href="{{ (page < pages  ? '?page=' ~ (page + 1) : '')}}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right w-6 h-6">
+						<polyline points="9 18 15 12 9 6"></polyline>
+					</svg>
+				</a>
+			</div>
+			<div class="h-12 w-12 ml-1 flex justify-center items-center rounded-full bg-gray-200 cursor-pointer hover:bg-green-200 {{(page == pages) ? 'hidden' : ''}}">
+				<a href="?page={{pages}}">
+					<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-right w-6 h-6">
+						<polyline points="9 18 15 12 9 6"></polyline>
+					</svg>
+				</a>
+			</div>
+		</div>
+	</div>
+  </section>
+	
 {% endblock %}

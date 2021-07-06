@@ -34,13 +34,38 @@ class BivouacRepository extends ServiceEntityRepository
             $query->andWhere('c.id = :id')
                 ->setParameter('id', $categorie);
         }
-        if($region != null){
-            $query->leftJoin('b.regions', 'r');
-            $query->andWhere('r.id = :id')
-                ->setParameter('id', $region);
-        }
+        // if($region != null){
+        //     $query->leftJoin('b.regions', 'r');
+        //     $query->andWhere('r.id = :id')
+        //         ->setParameter('id', $region);
+        // }
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Returns all bivouac per page
+     * @return void
+     */
+    public function getPaginatedBivouac($page, $limit){
+        $query = $this->createQueryBuilder('b')
+            ->where('b.active=1')
+            ->orderBy('b.created_at')
+            ->setFirstResult(($page * $limit) -$limit)
+            ->setMaxResults($limit);
+        
+        return $query->getQuery()->getResult();
+    }
+    /**
+     * Returns number of bivouac
+     * @return void
+     */
+    public function getTotalBivouac(){
+        $query = $this->createQueryBuilder('b')
+            ->select('COUNT(b)')
+            ->where('b.active=1');
+            //getSingleScalarResult pour obtenir un résultat en chaine caractere et non en tableau
+        return $query->getQuery()->getSingleScalarResult();
     }
 
     // /**
