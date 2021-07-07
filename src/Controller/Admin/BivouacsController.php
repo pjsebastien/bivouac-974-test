@@ -49,19 +49,14 @@ class BivouacsController extends AbstractController
                 $nomImage = $this->getParameter("images_directory")."/".$image->getName();
                 if(file_exists($nomImage)){
                     unlink($nomImage);
-                }
-                
+                }                
             }
-        }
-        
+        }      
         $em = $this->getDoctrine()->getManager();
         $em->remove($bivouac);
         $em->flush();
 
         $this->addFlash('message', 'Bivouac supprimé avec succès');
-
-        return $this->redirectToRoute('admin_bivouacs_home');
-        
-    }
-    
+        return $this->redirectToRoute('admin_bivouacs_home');       
+    }   
 }

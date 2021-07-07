@@ -6,9 +6,11 @@ use App\Entity\Bivouac;
 use App\Entity\Comment;
 use App\Form\CommentFormType;
 use App\Repository\BivouacRepository;
+use App\Repository\CategoriesRepository;
 use App\Repository\CommentRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -25,17 +27,31 @@ class BivouacsController extends AbstractController
      * @Route("/", name="liste")
      * @return void
      */
-    public function index(BivouacRepository $bivouacsRepo, Request $request){
+    public function index(BivouacRepository $bivouacsRepo,CategoriesRepository $CatRepo, Request $request){
         //On définit le nombre d'élément par package
         $limit = 8;
         //On récupère le num de page
         $page = (int)$request->query->get("page", 1);
-        //On recup les bivouacs
-        $bivouacs = $bivouacsRepo->getPaginatedBivouac($page, $limit);
+
+        //On récupère les filtres
+        $filtersCat = $request->get("categories");
+        //On recup les bivouacs en fonction du filtre
+        $bivouacs = $bivouacsRepo->getPaginatedBivouac($page, $limit, $filtersCat);
         //On récup le total de bivouac
-        $total= $bivouacsRepo->getTotalBivouac();
+        $total= $bivouacsRepo->getTotalBivouac($filtersCat);
+        //On vérifie si on a une requête ajax
+        //Si on en a une on envoie les données en json
+        if($request->get('ajax')){
+            return new JsonResponse([
+                'content' =>$this->renderView('bivouacs/_bivouacCard.html.twig', compact('bivouacs', 'total', 'limit', 'page'))
+            ]);
+        }
+
+        //On récupère toute les catégories
+        $categories= $CatRepo->findAll();
         
-        return $this->render('bivouacs/index.html.twig', compact('bivouacs', 'total', 'limit', 'page'));
+        //On ajoute dans le compact pour pouvoir les utiliser en front
+        return $this->render('bivouacs/index.html.twig', compact('bivouacs', 'total', 'limit', 'page','categories'));
 
     }
 

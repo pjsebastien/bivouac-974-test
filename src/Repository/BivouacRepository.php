@@ -47,10 +47,16 @@ class BivouacRepository extends ServiceEntityRepository
      * Returns all bivouac per page
      * @return void
      */
-    public function getPaginatedBivouac($page, $limit){
+    public function getPaginatedBivouac($page, $limit, $filtersCat = null){
         $query = $this->createQueryBuilder('b')
-            ->where('b.active=1')
-            ->orderBy('b.created_at')
+            ->where('b.active=1');
+        //On filtre les données
+        if($filtersCat != null){
+            $query->andWhere('b.Categories IN(:cats)')
+                ->setParameter(':cats', array_values($filtersCat));
+        }
+
+        $query->orderBy('b.created_at')
             ->setFirstResult(($page * $limit) -$limit)
             ->setMaxResults($limit);
         
@@ -60,10 +66,15 @@ class BivouacRepository extends ServiceEntityRepository
      * Returns number of bivouac
      * @return void
      */
-    public function getTotalBivouac(){
+    public function getTotalBivouac($filtersCat= null){
         $query = $this->createQueryBuilder('b')
             ->select('COUNT(b)')
             ->where('b.active=1');
+            //On filtre les données
+        if($filtersCat != null){
+            $query->andWhere('b.Categories IN(:cats)')
+                ->setParameter(':cats', array_values($filtersCat));
+        }
             //getSingleScalarResult pour obtenir un résultat en chaine caractere et non en tableau
         return $query->getQuery()->getSingleScalarResult();
     }
