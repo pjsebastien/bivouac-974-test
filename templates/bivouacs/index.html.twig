@@ -21,6 +21,7 @@
 		<div class="">
 			<h2>Filtrer</h2>
 			<form id="filters">
+				<h2>Catégories</h2>
 				{% for categorie in categories %}
 				<!-- on verifie si la categorie est dans les parametres -->
 					{% if queryParams is not empty and queryParams.categories is defined %}
@@ -29,6 +30,16 @@
 						{% set checked = "" %}
 					{% endif %}
 						<p><input type="checkbox" name="categories[]" id="cat{{categorie.id}}" value="{{categorie.id}}" {{checked}}><label for="cat{{categorie.id}}">{{categorie.name}}</label></p>					
+				{% endfor %}
+				<h2>Region</h2>
+				{% for region in regions %}
+				<!-- on verifie si la regions est dans les parametres -->
+					{% if queryParams is not empty and queryParams.region is defined %}					
+						{% set checked = (region.id in queryParams.region) ? "checked" : "" %}
+					{% else %}
+						{% set checked = "" %}
+					{% endif %}
+						<p><input type="checkbox" name="region[]" id="reg{{region.id}}" value="{{region.id}}" {{checked}}><label for="reg{{region.id}}">{{region.name}}</label></p>					
 				{% endfor %}
 
 				<input type="hidden" name="page" value="{{page}}">

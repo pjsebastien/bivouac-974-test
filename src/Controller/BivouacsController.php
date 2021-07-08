@@ -8,6 +8,7 @@ use App\Form\CommentFormType;
 use App\Repository\BivouacRepository;
 use App\Repository\CategoriesRepository;
 use App\Repository\CommentRepository;
+use App\Repository\RegionRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,20 +26,24 @@ class BivouacsController extends AbstractController
 {
     /**
      * @Route("/", name="liste")
-     * @return void
+     * @return voidk
      */
-    public function index(BivouacRepository $bivouacsRepo,CategoriesRepository $CatRepo, Request $request){
+    public function index(BivouacRepository $bivouacsRepo,CategoriesRepository $CatRepo,RegionRepository $RegionRepo, Request $request){
         //On définit le nombre d'élément par package
-        $limit = 8;
+        $limit = 6;
         //On récupère le num de page
         $page = (int)$request->query->get("page", 1);
 
         //On récupère les filtres
         $filtersCat = $request->get("categories");
+        //il faut laisser region sans s car c'est le name
+        $filtersReg = $request->get("region");
+        
         //On recup les bivouacs en fonction du filtre
-        $bivouacs = $bivouacsRepo->getPaginatedBivouac($page, $limit, $filtersCat);
+        $bivouacs = $bivouacsRepo->getPaginatedBivouac($page, $limit, $filtersCat, $filtersReg);
         //On récup le total de bivouac
-        $total= $bivouacsRepo->getTotalBivouac($filtersCat);
+        $total= $bivouacsRepo->getTotalBivouac($filtersCat, $filtersReg);
+        
         //On vérifie si on a une requête ajax
         //Si on en a une on envoie les données en json
         if($request->get('ajax')){
@@ -49,9 +54,10 @@ class BivouacsController extends AbstractController
 
         //On récupère toute les catégories
         $categories= $CatRepo->findAll();
+        $regions = $RegionRepo->findAll();
         
         //On ajoute dans le compact pour pouvoir les utiliser en front
-        return $this->render('bivouacs/index.html.twig', compact('bivouacs', 'total', 'limit', 'page','categories'));
+        return $this->render('bivouacs/index.html.twig', compact('bivouacs', 'total', 'limit', 'page','categories','regions'));
 
     }
 

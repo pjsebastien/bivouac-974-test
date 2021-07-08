@@ -34,11 +34,11 @@ class BivouacRepository extends ServiceEntityRepository
             $query->andWhere('c.id = :id')
                 ->setParameter('id', $categorie);
         }
-        // if($region != null){
-        //     $query->leftJoin('b.regions', 'r');
-        //     $query->andWhere('r.id = :id')
-        //         ->setParameter('id', $region);
-        // }
+        if($region != null){
+            $query->leftJoin('b.regions', 'r');
+            $query->andWhere('r.id = :idr')
+                ->setParameter('idr', $region);
+        }
 
         return $query->getQuery()->getResult();
     }
@@ -47,13 +47,19 @@ class BivouacRepository extends ServiceEntityRepository
      * Returns all bivouac per page
      * @return void
      */
-    public function getPaginatedBivouac($page, $limit, $filtersCat = null){
+    public function getPaginatedBivouac($page, $limit, $filtersCat = null, $filtersReg = null){
         $query = $this->createQueryBuilder('b')
             ->where('b.active=1');
         //On filtre les données
         if($filtersCat != null){
             $query->andWhere('b.Categories IN(:cats)')
                 ->setParameter(':cats', array_values($filtersCat));
+        }
+        
+        if($filtersReg != null){
+            $query->leftJoin('b.regions', 'r')
+                ->andWhere('r.id IN(:regs)')
+                ->setParameter(':regs', array_values($filtersReg));
         }
 
         $query->orderBy('b.created_at')
@@ -66,14 +72,19 @@ class BivouacRepository extends ServiceEntityRepository
      * Returns number of bivouac
      * @return void
      */
-    public function getTotalBivouac($filtersCat= null){
+    public function getTotalBivouac($filtersCat= null, $filtersReg= null){
         $query = $this->createQueryBuilder('b')
             ->select('COUNT(b)')
             ->where('b.active=1');
-            //On filtre les données
+        //On filtre les données
         if($filtersCat != null){
             $query->andWhere('b.Categories IN(:cats)')
                 ->setParameter(':cats', array_values($filtersCat));
+        }
+        if($filtersReg != null){
+            $query->leftJoin('b.regions', 'r')
+                ->andWhere('r.id IN(:regs)')
+                ->setParameter(':regs', array_values($filtersReg));
         }
             //getSingleScalarResult pour obtenir un résultat en chaine caractere et non en tableau
         return $query->getQuery()->getSingleScalarResult();
