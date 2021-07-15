@@ -6,7 +6,7 @@
 {% block body %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/axentix@1.3.1/dist/css/axentix.min.css">
 
-	<h1>Gérer les bivouacs</h1>
+	<h1 class="py-5 text-center">Gérer les bivouacs</h1>
 	<table class="table striped">
 		<thead>
 			<tr>
@@ -14,7 +14,7 @@
 				<th>Titre</th>
 				<th>Date</th>
 				<th>Active</th>
-				<th>Actions</th>
+				<th class="float-right mr-4"></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,7 +29,7 @@
 							<span class="slider"></span>
 						</label>
 					</td>
-					<td class="text-center">
+					<td class="text-center float-right">
 						
 						<a href="{{ path('users_bivouacs_modifier', {id: bivouac.id})}}" class="btn shadow-1 rounded-1 blue" >Modifier</a>
 						

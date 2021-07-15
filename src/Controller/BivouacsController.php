@@ -9,6 +9,7 @@ use App\Repository\BivouacRepository;
 use App\Repository\CategoriesRepository;
 use App\Repository\CommentRepository;
 use App\Repository\RegionRepository;
+use App\Repository\TagRepository;
 use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -28,9 +29,9 @@ class BivouacsController extends AbstractController
      * @Route("/", name="liste")
      * @return voidk
      */
-    public function index(BivouacRepository $bivouacsRepo,CategoriesRepository $CatRepo,RegionRepository $RegionRepo, Request $request){
+    public function index(BivouacRepository $bivouacsRepo,CategoriesRepository $CatRepo,RegionRepository $RegionRepo,TagRepository $TagRepo, Request $request){
         //On définit le nombre d'élément par package
-        $limit = 6;
+        $limit = 8;
         //On récupère le num de page
         $page = (int)$request->query->get("page", 1);
 
@@ -38,11 +39,12 @@ class BivouacsController extends AbstractController
         $filtersCat = $request->get("categories");
         //il faut laisser region sans s car c'est le name
         $filtersReg = $request->get("region");
+        $filtersTag = $request->get("tag");
         
         //On recup les bivouacs en fonction du filtre
-        $bivouacs = $bivouacsRepo->getPaginatedBivouac($page, $limit, $filtersCat, $filtersReg);
+        $bivouacs = $bivouacsRepo->getPaginatedBivouac($page, $limit, $filtersCat, $filtersReg, $filtersTag);
         //On récup le total de bivouac
-        $total= $bivouacsRepo->getTotalBivouac($filtersCat, $filtersReg);
+        $total= $bivouacsRepo->getTotalBivouac($filtersCat, $filtersReg, $filtersTag);
         
         //On vérifie si on a une requête ajax
         //Si on en a une on envoie les données en json
@@ -55,9 +57,10 @@ class BivouacsController extends AbstractController
         //On récupère toute les catégories
         $categories= $CatRepo->findAll();
         $regions = $RegionRepo->findAll();
+        $tags = $TagRepo->findAll();
         
         //On ajoute dans le compact pour pouvoir les utiliser en front
-        return $this->render('bivouacs/index.html.twig', compact('bivouacs', 'total', 'limit', 'page','categories','regions'));
+        return $this->render('bivouacs/index.html.twig', compact('bivouacs', 'total', 'limit', 'page','categories','regions', 'tags'));
 
     }
 

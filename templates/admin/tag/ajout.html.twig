@@ -3,8 +3,26 @@
 {% block title %}Ajouter un tag{% endblock %}
 
 {% block body %}
+<div class="py-12">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+        <div class="bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="p-6 bg-green-50 border-b border-gray-200">
+                <h1 class="text-center font-bold text-xl uppercase text-gray-600 mb-6">Ajouter un service : </h1>
+                {{ form_start(form) }}
+                <div class="mb-4">
+                    <label class="text-xl text-gray-600">Titre du service <span class="text-red-500">*</span></label></br>
+                    {{form_row(form.name)}}
+                </div>
 
-    <h1>Ajouter un tag : </h1>
-    {{ form(form) }}
+                {{form_row(form.Valider)}}
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{ form_end(form) }}
+
 
 {% endblock %}

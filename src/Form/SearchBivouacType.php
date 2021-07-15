@@ -23,7 +23,7 @@ class SearchBivouacType extends AbstractType
             ->add('mots', SearchType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => 'form-control my-2',
+                    'class' => '',
                     'placeholder' => 'Entrez un ou plusieurs môts clés'
                 ],
                 'required' => false,
@@ -32,13 +32,13 @@ class SearchBivouacType extends AbstractType
                 'class' => Categories::class,
                 'label' => false,
                 'attr' => [
-                    'class' => 'form-control my-2',
+                    'class' => '',
                 ],
                 'required' => false,
             ])
             ->add('Rechercher', SubmitType::class, [
                 'attr' => [
-                    'class' => 'form-control bg-green-400 py-2 px-4 rounded-full',
+                    'class' => '',
                 ]
             ])
         ;

@@ -17,30 +17,50 @@
 <section class="text-gray-600 body-font">
 	<!-- partie filtrage/recherche avancée -->
 
-	<div class="">
+	<div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 		<div class="">
 			<h2>Filtrer</h2>
-			<form id="filters">
-				<h2>Catégories</h2>
-				{% for categorie in categories %}
-				<!-- on verifie si la categorie est dans les parametres -->
-					{% if queryParams is not empty and queryParams.categories is defined %}
-						{% set checked = (categorie.id in queryParams.categories) ? "checked" : "" %}
-					{% else %}
-						{% set checked = "" %}
-					{% endif %}
-						<p><input type="checkbox" name="categories[]" id="cat{{categorie.id}}" value="{{categorie.id}}" {{checked}}><label for="cat{{categorie.id}}">{{categorie.name}}</label></p>					
-				{% endfor %}
-				<h2>Region</h2>
-				{% for region in regions %}
-				<!-- on verifie si la regions est dans les parametres -->
-					{% if queryParams is not empty and queryParams.region is defined %}					
-						{% set checked = (region.id in queryParams.region) ? "checked" : "" %}
-					{% else %}
-						{% set checked = "" %}
-					{% endif %}
-						<p><input type="checkbox" name="region[]" id="reg{{region.id}}" value="{{region.id}}" {{checked}}><label for="reg{{region.id}}">{{region.name}}</label></p>					
-				{% endfor %}
+			<form id="filters" class="flex flex-row">
+				<div class="">
+					<h2>Catégories</h2>
+					{% for categorie in categories %}
+					<!-- on verifie si la categorie est dans les parametres -->
+						{% if queryParams is not empty and queryParams.categories is defined %}
+							{% set checked = (categorie.id in queryParams.categories) ? "checked" : "" %}
+						{% else %}
+							{% set checked = "" %}
+						{% endif %}
+							<p><input type="checkbox" name="categories[]" id="cat{{categorie.id}}" value="{{categorie.id}}" {{checked}}><label for="cat{{categorie.id}}">{{categorie.name}}</label></p>					
+					{% endfor %}
+				</div>
+				
+				<div class="ml-10">
+					<h2>Region</h2>
+					{% for region in regions %}
+					<!-- on verifie si la regions est dans les parametres -->
+						{% if queryParams is not empty and queryParams.region is defined %}					
+							{% set checked = (region.id in queryParams.region) ? "checked" : "" %}
+						{% else %}
+							{% set checked = "" %}
+						{% endif %}
+							<p><input type="checkbox" name="region[]" id="reg{{region.id}}" value="{{region.id}}" {{checked}}><label for="reg{{region.id}}">{{region.name}}</label></p>					
+					{% endfor %}
+				</div>
+
+				<div class="ml-10">
+					<h2>Tags</h2>
+					{% for tag in tags %}
+						<!-- on verifie si la regions est dans les parametres -->
+						{% if queryParams is not empty and queryParams.tag is defined %}					
+							{% set checked = (tag.id in queryParams.tag) ? "checked" : "" %}
+						{% else %}
+							{% set checked = "" %}
+						{% endif %}
+							<p><input type="checkbox" name="tag[]" id="tag{{tag.id}}" value="{{tag.id}}" {{checked}}><label for="tag{{tag.id}}">{{tag.name}}</label></p>					
+					{% endfor %}
+				</div>
+				
+				
 
 				<input type="hidden" name="page" value="{{page}}">
 			</form>

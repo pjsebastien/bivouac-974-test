@@ -22,7 +22,7 @@ class BivouacRepository extends ServiceEntityRepository
      * Recherche d'un bivouac en fonction d'un formulaire
       *@return void
     */
-    public function search($mots = null, $categorie = null, $region = null){
+    public function search($mots = null, $categorie = null, $region = null, $tag = null){
         $query = $this->createQueryBuilder('b');
         $query->where('b.active =1');
         if($mots != null){
@@ -39,6 +39,11 @@ class BivouacRepository extends ServiceEntityRepository
             $query->andWhere('r.id = :idr')
                 ->setParameter('idr', $region);
         }
+        if($tag != null){
+            $query->leftJoin('b.tags', 't');
+            $query->andWhere('t.id = :idt')
+                ->setParameter('idt', $tag);
+        }
 
         return $query->getQuery()->getResult();
     }
@@ -47,7 +52,7 @@ class BivouacRepository extends ServiceEntityRepository
      * Returns all bivouac per page
      * @return void
      */
-    public function getPaginatedBivouac($page, $limit, $filtersCat = null, $filtersReg = null){
+    public function getPaginatedBivouac($page, $limit, $filtersCat = null, $filtersReg = null, $filtersTag = null){
         $query = $this->createQueryBuilder('b')
             ->where('b.active=1');
         //On filtre les données
@@ -61,6 +66,12 @@ class BivouacRepository extends ServiceEntityRepository
                 ->andWhere('r.id IN(:regs)')
                 ->setParameter(':regs', array_values($filtersReg));
         }
+        if($filtersTag != null){
+            $query->leftJoin('b.tags', 't')
+                ->andWhere('t.id IN(:tags)')
+                ->setParameter(':tags', array_values($filtersTag));
+        }
+        
 
         $query->orderBy('b.created_at')
             ->setFirstResult(($page * $limit) -$limit)
@@ -72,7 +83,7 @@ class BivouacRepository extends ServiceEntityRepository
      * Returns number of bivouac
      * @return void
      */
-    public function getTotalBivouac($filtersCat= null, $filtersReg= null){
+    public function getTotalBivouac($filtersCat= null, $filtersReg= null, $filtersTag= null){
         $query = $this->createQueryBuilder('b')
             ->select('COUNT(b)')
             ->where('b.active=1');
@@ -85,6 +96,11 @@ class BivouacRepository extends ServiceEntityRepository
             $query->leftJoin('b.regions', 'r')
                 ->andWhere('r.id IN(:regs)')
                 ->setParameter(':regs', array_values($filtersReg));
+        }
+        if($filtersTag != null){
+            $query->leftJoin('b.tags', 't')
+                ->andWhere('t.id IN(:tags)')
+                ->setParameter(':tags', array_values($filtersTag));
         }
             //getSingleScalarResult pour obtenir un résultat en chaine caractere et non en tableau
         return $query->getQuery()->getSingleScalarResult();
