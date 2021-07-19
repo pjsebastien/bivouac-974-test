@@ -1,7 +1,11 @@
-{% extends 'base.html.twig' %} {% block title %}Profil de {{ app.user.firstname }} {{ app.user.name }}{%
-endblock %} {% block body %}
+{% extends 'base.html.twig' %} 
+{% block title %}Profil de {{ app.user.firstname }} {{ app.user.name }}{%
+endblock %} 
 
-<div class="grix xs4 container">
+{% block body %}
+
+
+<div class="text-gray-600 body-font container px-5 py-12 mx-auto">
   {% for message in app.flashes('message') %}
   <div class="col-xs4">
     <div class="p-3 my-2 rounded-2 success">{{message}}</div>
@@ -9,20 +13,21 @@ endblock %} {% block body %}
   
     
   {% endfor %}
-  <div class="col-xs4">
+  <div class="text-3xl font-bold text-center mb-6">
     <h1>Profil de {{ app.user.firstname }} {{ app.user.name }}</h1>
   </div>
-  <div class="col-xs1">Nom :</div>
-  <div class="col-xs3">{{ app.user.name }}</div>
-  <div class="col-xs1">Prénom :</div>
-  <div class="col-xs3">{{ app.user.firstname }}</div>
-  <div class="col-xs1">Email :</div>
-  <div class="col-xs3">{{ app.user.Email }}</div>
-  <div class="col-xs4">
-    <a href="{{path('users_profil_modifier')}}" class="btn shadow-1 rounded-1 blue">Modifier le profil</a>
-    <a href="{{path('users_pass_modifier')}}" class="btn shadow-1 rounded-1 blue">Modifier le mot de passe</a>
+  <div class="">Nom : {{ app.user.name }}</div>
+  <div class="">Prénom : {{ app.user.firstname }}</div>
+  <div class="">Email : {{ app.user.Email }}</div>
+
+  <div class="my-5">
+    <a href="{{path('users_profil_modifier')}}" class="bg-green-300 px-5 py-3 text-sm shadow-sm font-medium tracking-wider border text-green-600 rounded-full hover:shadow-lg hover:bg-green-400">Modifier le profil</a>
+    <a href="{{path('users_pass_modifier')}}" class="bg-green-300 px-5 py-3 text-sm shadow-sm font-medium tracking-wider border text-green-600 rounded-full hover:shadow-lg hover:bg-green-400">Modifier le mot de passe</a>
   </div>
-  <div class="col-xs4">
+
+    
+
+  <div class="">
     <h1>Mes bivouacs ({{app.user.categories|length}})</h1>
   </div>
   {# !!!! Attention je ne sais pas pourquoi mais ici le contenu de la table bivouac s'obtiens avec categorie... #}

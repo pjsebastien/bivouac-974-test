@@ -35,8 +35,11 @@ class BivouacsType extends AbstractType
                     'class' => 'border-1 border-gray-300 p-1 w-full'
                 ]
             ])
-            ->add('content', CKEditorType::class, [
-                'label'=> false
+            ->add('content', TextareaType::class, [
+                'label'=> false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
+                ]
             ])
             
             ->add('tags', EntityType::class, [
@@ -71,6 +74,7 @@ class BivouacsType extends AbstractType
             ])
             ->add('gps', TextType::class, [
                 'label' => false, 
+                'required' => false,
                 'attr' => [
                     'class' => 'border-1 border-gray-300 p-1 w-full'
                 ]

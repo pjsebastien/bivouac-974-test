@@ -18,8 +18,14 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email')
+            ->add('email', null, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
+                ],
+            ])
             ->add('agreeTerms', CheckboxType::class, [
+                'label' => "accepter les termes ",
                 'mapped' => false,
                 'constraints' => [
                     new IsTrue([
@@ -27,13 +33,27 @@ class RegistrationFormType extends AbstractType
                     ]),
                 ],
             ])
-            ->add('name', TextType::class)
-            ->add('firstname', TextType::class)
+            ->add('name', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
+                ],
+            ])
+            ->add('firstname', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
+                ],
+            ])
             ->add('plainPassword', PasswordType::class, [
                 // instead of being set onto the object directly,
                 // this is read and encoded in the controller
+                'label' => false,
                 'mapped' => false,
-                'attr' => ['autocomplete' => 'new-password'],
+                'attr' => [
+                    'autocomplete' => 'new-password',
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
+                ],
                 'constraints' => [
                     new NotBlank([
                         'message' => 'Please enter a password',
@@ -44,6 +64,7 @@ class RegistrationFormType extends AbstractType
                         // max length allowed by Symfony for security reasons
                         'max' => 4096,
                     ]),
+                
                 ],
             ])
         ;
