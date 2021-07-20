@@ -2,6 +2,13 @@
 
 {% block title %}Ajouter un bivouac{% endblock %}
 
+{% block stylesheets %}
+{{ encore_entry_link_tags('app') }}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+crossorigin=""/>
+{% endblock %}
+
 {% block body %}
 
     
@@ -21,8 +28,21 @@
                         {{form_row(form.Categories)}}
                     </div>
                     <div class="mb-4">
-                        <label class="text-xl text-gray-600">Ajouter un lien gps </label><br>
+                        <label class="text-xl text-gray-600">Envoyer un lien GPS </label><br>
                         {{form_row(form.gps)}}
+                    </div>
+                    
+                    <div class="mb-4">
+                        <label class="text-xl text-gray-600 text-center">Ou sélectionner sur la carte </label><br>
+                        <div class="w-full" id="mapid"></div>
+                    </div>
+                    <div class="mb-4">
+                        <label class="text-xl text-gray-600">Latitude </label><br>
+                        {{form_row(form.lat)}}
+                    </div>
+                    <div class="mb-4">
+                        <label class="text-xl text-gray-600">Longitude </label><br>
+                        {{form_row(form.lon)}}
                     </div>
                     <div class="mb-4">
                         <label class="text-xl text-gray-600">Description <span class="text-red-500">*</span></label><br>
@@ -61,6 +81,109 @@
             </div>
         </div>
     </div>
+
+
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+crossorigin=""></script>
+<script>
+    var mymap = L.map('mapid').setView([ -21.154959,55.454865], 10);
+    let marqueur;
+    
+
+		L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+		maxZoom: 18,
+		id: 'mapbox/streets-v11',
+		tileSize: 512,
+		zoomOffset: -1,
+		accessToken: 'pk.eyJ1IjoicGpzZWJhc3RpZW4iLCJhIjoiY2tyYWFxYWJzNGUxMTJucWhscjJ1ZWdneiJ9.HLu0xVDeAIdZCp8a_bX3QA'
+		}).addTo(mymap);
+        mymap.on('click', mapClickListen)
+
+        var geolocButton = L.control({position: 'topleft'});
+		geolocButton.onAdd = (mapRef) => {
+			var button = L.DomUtil.create('button', 'geoloc-button')
+			button.innerHTML = '<img class="h-8" src="/galerie/geo.png"/>'
+			button.onclick = () => {
+				mapRef.locate();
+				button.disabled= true;
+				mapRef.on('locationfound', (locEvent) => {
+					var radius = locEvent.accuracy 
+					var point = locEvent.latlng
+					mapRef.setView(point, 14)
+					button.disabled = false
+					L.circle(point, radius).addTo(mapRef).bindPopup('Vous êtes ici !').openPopup()
+				})
+				mapRef.on('locationerror', (err) => {
+					button.disabled = false;
+				})
+			}
+			return button;
+		}
+		geolocButton.addTo(mymap)
+
+
+function mapClickListen(e) {
+        // On récupère les coordonnées du clic
+        pos = e.latlng
+        console.log(pos);
+
+        // On crée un marqueur
+        addMarker(pos)
+
+        // On affiche les coordonnées dans le formulaire
+        document.querySelector("#bivouacs_lat").value=pos.lat
+        document.querySelector("#bivouacs_lon").value=pos.lng
+}
+
+function addMarker(pos){
+    // On vérifie si le marqueur existe déjà
+    if (marqueur != undefined) {
+        // Si oui, on le retire
+        mymap.removeLayer(marqueur);
+    }
+
+    // On crée le marqueur aux coordonnées "pos"
+    marqueur = L.marker(
+        pos, {
+            // On rend le marqueur déplaçable
+            draggable: true
+        }
+    )
+
+    // On ajoute le marqueur
+    marqueur.addTo(mymap)
+}
+
+function addMarker(pos){
+    // On vérifie si le marqueur existe déjà
+    if (marqueur != undefined) {
+        // Si oui, on le retire
+        mymap.removeLayer(marqueur);
+    }
+
+    // On crée le marqueur aux coordonnées "pos"
+    marqueur = L.marker(
+        pos, {
+            // On rend le marqueur déplaçable
+            draggable: true
+        }
+    )
+
+    // On écoute le glisser/déposer et on met à jour les coordonnées
+    marqueur.on('dragend', function(e) {
+        pos = e.target.getLatLng();
+        document.querySelector("#lat").value=pos.lat;
+        document.querySelector("#lon").value=pos.lng;
+    });
+
+    // On ajoute le marqueur
+    marqueur.addTo(mymap)
+}
+
+
+</script>
     
 
 {% endblock %}

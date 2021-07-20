@@ -36,6 +36,7 @@ class MainController extends AbstractController
         return $this->render('main/index.html.twig', [
             'bivouacs' => $bivouac ,
             'tag' => $tagsRepo->findAll(),
+            'totalBivouac' => $bivouacRepo->findAll(),
             'form' => $form->createView(),
             
 

@@ -70,7 +70,6 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 /* Map leaflet mainPage */
 
 #mapid {
-   height: 400px; 
-   width: 800px;
+   height: 600px; 
 }
 

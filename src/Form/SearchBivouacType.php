@@ -23,7 +23,7 @@ class SearchBivouacType extends AbstractType
             ->add('mots', SearchType::class, [
                 'label' => false,
                 'attr' => [
-                    'class' => '',
+                    'class' => 'w-full bg-gray-100 bg-opacity-50 rounded focus:ring-2 focus:ring-indigo-200 focus:bg-transparent border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out',
                     'placeholder' => 'Entrez un ou plusieurs môts clés'
                 ],
                 'required' => false,
@@ -32,7 +32,7 @@ class SearchBivouacType extends AbstractType
                 'class' => Categories::class,
                 'label' => false,
                 'attr' => [
-                    'class' => '',
+                    'class' => 'w-full bg-gray-100 bg-opacity-50 rounded focus:ring-2 focus:ring-indigo-200 focus:bg-transparent border border-gray-300 focus:border-indigo-500 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out',
                 ],
                 'required' => false,
             ])

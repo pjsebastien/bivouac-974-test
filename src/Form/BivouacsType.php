@@ -79,6 +79,22 @@ class BivouacsType extends AbstractType
                     'class' => 'border-1 border-gray-300 p-1 w-full'
                 ]
             ])
+            ->add('lat', TextType::class, [
+                'label' => false, 
+                'required' => false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full',
+                    'id' => 'lat'
+                ]
+            ])
+            ->add('lon', TextType::class, [
+                'label' => false, 
+                'required' => false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full',
+                    'id' => 'lon'
+                ]
+            ])
 
 
 
