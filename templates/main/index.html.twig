@@ -18,7 +18,7 @@ crossorigin=""/>
 
 <section class="text-gray-600 body-font">
 	<div class="container mx-auto flex flex-col px-5 py-24 justify-center items-center">
-	  <div class="xl:w-3/6 lg:w-5/6  w-full mb-10 object-cover object-center rounded" id="mapid"></div>
+	  <div class="xl:w-3/6 lg:w-5/6  w-full mb-10 object-cover object-center rounded shadow-lg" id="mapid"></div>
 	  <div class="w-full md:w-2/3 flex flex-col mb-16 items-center text-center">
 		<h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Trouvez et partagez gratuitement vos meilleurs spots !</h1>
 		<p class="mb-8 leading-relaxed">Kickstarter biodiesel roof party wayfarers cold-pressed. Palo santo live-edge tumeric scenester copper mug flexitarian. Prism vice offal plaid everyday carry. Gluten-free chia VHS squid listicle artisan.</p>
@@ -64,82 +64,11 @@ crossorigin=""/>
 
 <section class="text-gray-600 body-font">
 	
-		
-
-
-	
-	<div class="container px-5 py-12 mx-auto">
 		<div class="container px-5 pb-12 mx-auto flex flex-wrap">
 			
-			<div class="flex flex-wrap -m-4">
-			{% if is_granted("ROLE_USER") %}
-			<h2 class="text-2xl font-bold uppercase">Mes favoris :</h2><br>
-			{% for bivouac in totalBivouac %}
-			{% for favoris in bivouac.favoris %}
-						{% if favoris.id == app.user.id %}
-						<div class=" sm:w-full xl:w-1/4 md:w-1/2 p-4">
-							<div class="bg-gray-100 p-6  rounded-lg">
-								
-								<img class="h-40 rounded w-full object-cover object-center mb-6" src="{{asset('uploads/' ~ bivouac.images[0].name )|imagine_filter('square')}}" alt="{{bivouac.title}}">
-								<h3 class="tracking-widest text-green-500 text-xs font-medium title-font">{{bivouac.categories.name}}</h3>
-											
-								{% for tag in bivouac.tags %} 
-									<a class="inline-flex items-center h-5 px-2 m-1 text-xs text-black transition-colors duration-150 bg-gray-300 rounded-lg focus:shadow-outline hover:bg-gray-600" href="#">{{tag.name}}</a>
-								
-								{% endfor %}
-								{% for region in bivouac.regions %}
-									<a class="inline-flex items-center h-8 px-2 m-1 text-xs text-white transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-600" href="#">{{region.name}}</a>
-								{% endfor %}
-				
-								<h2 class="text-lg text-gray-900 font-medium title-font mb-4"><a href="{{path('bivouacs_details', {slug : bivouac.slug})}}">{{bivouac.title}}</a></h2>
-								{# Attention la description est en html, on met le filtre striptags pour y remedier et si l'annonce est trop longue on limite le nombre de caractere on parametre avec twig string extra #}
-								<p class="leading-relaxed text-base h-24">{{bivouac.content|striptags|u.truncate(80, '...')}}</p>
-								<div class="text-green-600">		
-									{% if is_granted("ROLE_USER") %}
-										{% for favoris in bivouac.favoris %}
-											{% if favoris.id == app.user.id %}
-											<a href="{{path('bivouacs_retrait_favoris', {id: bivouac.id})}}">
-												<i class="fas fa-heart"></i>
-											</a>
-											{% else %}
-											<a href="{{path('bivouacs_ajout_favoris', {id: bivouac.id})}}">
-												<i class="far fa-heart"></i>
-											</a>	
-											{% endif %}
-										{% else %}
-											<a href="{{path('bivouacs_ajout_favoris', {id: bivouac.id})}}">
-												<i class="far fa-heart"></i>
-											</a>
-										{% endfor %}
-									{% else %}
-										<i class="far fa-heart"></i>	
-									{% endif %}
-									<a class="float-right" href="{{path('bivouacs_details', {slug : bivouac.slug})}}">Lire plus...</a>
-								</div>
-								
-							</div>
-						</div>
-						
-						{% endif %}
-						
-			
-			{% endfor %}
-			{% endfor %}
-			{% endif %}
-		</div>
 		
 
-			
-			
-		  
-	  
-			
-
-
-	  <div class="flex flex-wrap -m-4">
-
-		
-		
+	<div class="flex flex-wrap -m-4">		
 	{% for bivouac in bivouacs %}
 		<div class=" sm:w-full xl:w-1/4 md:w-1/2 p-4">
 		  <div class="bg-gray-100 p-6  rounded-lg">
@@ -188,7 +117,34 @@ crossorigin=""/>
 	{% endfor %}
 		
 	  </div>
+	  <div class="flex flex-wrap w-full mx-auto justify-items-center">
+		{% if is_granted("ROLE_USER") %}
+		<h2 class="text-2xl font-bold uppercase w-full text-center my-5 items-center">Mes favoris :</h2>
+			{% for bivouac in totalBivouac %}
+				{% for favoris in bivouac.favoris %}
+							{% if favoris.id == app.user.id %}
+							<a class="w-full md:w-1/2 xl:w-1/3 mx-auto my-6 justify-center" href="{{path('bivouacs_details', {slug : bivouac.slug})}}">
+							<div class="flex-row bg-white border-2 border-gray-300 p-1 rounded-md tracking-wide shadow-lg mx-4">
+								<div id="header" class="flex items-center"> 
+								<img alt="{{bivouac.title}}" class="w-24 rounded-xl border-2 border-gray-300" src="{{asset('uploads/' ~ bivouac.images[0].name )|imagine_filter('square')}}" />
+								<div id="header-text" class="leading-5 ml-6 sm">
+									<h4 class="text-xl font-semibold">{{bivouac.title}}</h4>
+									<h5 class="font-semibold text-green-600">{{bivouac.categories.name}}</h5>
+									{% for region in bivouac.regions %}
+										<h5 class=" text-green-400">{{region.name}}</h5>
+									{% endfor %}
+								</div>
+								</div>
+							</div>
+							</a>
+							
+							{% endif %}				
+				{% endfor %}
+			{% endfor %}
+		{% endif %}
 	</div>
+	</div>
+	
   </section>
 
 

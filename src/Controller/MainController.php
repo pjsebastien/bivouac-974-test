@@ -20,7 +20,7 @@ class MainController extends AbstractController
      */
     public function index(BivouacRepository $bivouacRepo, TagRepository $tagsRepo, CommentRepository $commentRepo, Request $request): Response
     {
-        $bivouac = $bivouacRepo->findBy(['active' => true], ['created_at' => 'desc'], 20);
+        $bivouac = $bivouacRepo->findBy(['active' => true], ['created_at' => 'desc'], 12);
         $form = $this->createForm(SearchBivouacType::class);
         $search = $form->handleRequest($request);
         
