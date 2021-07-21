@@ -11,10 +11,10 @@
             <div class='w-full'>
                 <div class="flex flex-row flex-wrap mt-2 px-2 py-3 mx-3">
                     <div class="w-1/6 h-auto rounded-full">
-                        <img class="w-16 lg:w-20 h-16 lg:h-20 object-cover  shadow cursor-pointer mx-auto" alt="Logo auberge de jeunesse" src="{{asset('galerie/auberge.png')}}">
+                        <img class="w-16 lg:w-20 h-16 lg:h-20 object-cover  shadow cursor-pointer mx-auto" alt="Logo auberge de jeunesse" src="{{asset('galerie/' ~ bivouac.Categories.image ~ '')}}">
                     </div>
                     <div class="w-4/6 flex flex-col mb-2 ml-4 mt-1">
-                        <div class='text-gray-600 text-xl font-bold uppercase'>{{bivouac.title}}</div>
+                        <div class='text-gray-600 text-xl font-bold uppercase'>{{bivouac.title}} <span class="text-xs lowercase text-gray-400">( {{bivouac.Categories.name}} )</span></div>
                         <div class='flex flex-wrap w-full mt-1'>
                             {% for region in bivouac.regions %}
                                 <a class="inline-flex items-center h-8 px-2 m-1 text-xs text-white transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-600" href="#">{{region.name}}</a>
@@ -36,6 +36,25 @@
                 </div>
                 <div class='text-gray-600 font-semibold text-lg mb-2 mx-3 px-2'>{{bivouac.title}}</div>
                 <div class='text-gray-500 font-thin text-sm mb-6 mx-3 px-2'>{{bivouac.content|striptags}}</div>
+                {% if bivouac.adresse != null %}
+                    <div class='text-gray-600 font-semibold text-lg mb-2 mx-3 px-2'>Adresse :</div>
+                    <div class='text-gray-500 font-thin text-sm mb-6 mx-3 px-2'>{{bivouac.adresse|striptags}}</div>
+                {% endif %}
+                {% if bivouac.itineraire != null %}
+                    <div class='text-gray-600 font-semibold text-lg mb-2 mx-3 px-2'>Itinéraire détaillé 
+                        <a class="inline-flex items-center h-8 px-2 m-1 text-xs text-white transition-colors duration-150 bg-gray-400 rounded-lg focus:shadow-outline hover:bg-gray-600" href="http://google.com/maps/?q={{bivouac.lat}},{{bivouac.lon}}" target="blank">Ouvrir dans google.map</a>
+                    </div>
+                    <div class='text-gray-500 font-thin text-sm mb-6 mx-3 px-2'>{{bivouac.itineraire|striptags}}</div>
+                {% endif %}
+                {% if bivouac.prix != null %}
+                    <div class='text-gray-600 font-semibold text-lg mb-2 mx-3 px-2'>Fourchette de prix :</div>
+                    <div class='text-gray-500 font-thin text-sm mb-6 mx-3 px-2'>{{bivouac.prix|striptags}}</div>
+                {% endif %}
+                <div class="flex justify-start my-2 border-t border-gray-100">
+                    {% for tag in bivouac.tags %} 
+                    <img class="w-6 lg:w-8 h-6 lg:h-8 object-cover my-4 shadow cursor-pointer mx-auto" alt="Logo auberge de jeunesse" src="{{asset('galerie/' ~ tag.image ~ '')}}">
+                    {% endfor %}
+                </div>
                 <div class="flex justify-start mb-4 border-t border-gray-100">
                     <div class="flex w-full mt-1 pt-2 pl-5">
                         <div class="text-green-600">		
@@ -65,6 +84,10 @@
                     </div>
                     <div class="flex justify-end w-full mt-1 pt-2 pr-5">
                         <a class="inline-flex items-center h-8 px-2 m-1 text-xs text-white transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-600" href="http://google.com/maps/?q={{bivouac.lat}},{{bivouac.lon}}" target="blank">GPS</a>
+                        {% if bivouac.lien != null %}
+                        <a class="inline-flex items-center h-8 px-2 m-1 text-xs text-white transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-600" href="{{bivouac.lien}}" target="blank">Lien vers le site</a>
+                        {% endif %}
+                        
                         
                             
                         

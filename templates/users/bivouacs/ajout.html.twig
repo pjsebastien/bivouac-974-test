@@ -26,12 +26,7 @@ crossorigin=""/>
                     <div class="mb-4">
                         <label class="text-xl text-gray-600">Catégorie <span class="text-red-500">*</span></label><br>
                         {{form_row(form.Categories)}}
-                    </div>
-                    <div class="mb-4">
-                        <label class="text-xl text-gray-600">Envoyer un lien GPS </label><br>
-                        {{form_row(form.gps)}}
-                    </div>
-                    
+                    </div>                   
                     <div class="mb-4">
                         <label class="text-xl text-gray-600 text-center">Ou sélectionner sur la carte </label><br>
                         <div class="w-full" id="mapid"></div>
@@ -47,6 +42,22 @@ crossorigin=""/>
                     <div class="mb-4">
                         <label class="text-xl text-gray-600">Description <span class="text-red-500">*</span></label><br>
                         {{form_row(form.content)}}
+                    </div>
+                    <div class="mb-4">
+                        <label class="text-xl text-gray-600">Adresse du lieu</label><br>
+                        {{form_row(form.adresse)}}
+                    </div>
+                    <div class="mb-4">
+                        <label class="text-xl text-gray-600">Itinéraire détaillé</label><br>
+                        {{form_row(form.itineraire)}}
+                    </div>
+                    <div class="mb-4">
+                        <label class="text-xl text-gray-600">Prix approximatif ( si payant)</label><br>
+                        {{form_row(form.prix)}}
+                    </div>
+                    <div class="mb-4">
+                        <label class="text-xl text-gray-600">Lien internet ( si éxistant )</label><br>
+                        {{form_row(form.lien)}}
                     </div>
                     <div class="mb-4 ">
                         <label class="text-xl text-gray-600">Sélectionner les services disponibles <span class="text-red-500">*</span></label><br>

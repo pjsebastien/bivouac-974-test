@@ -20,6 +20,12 @@ class CategoriesType extends AbstractType
                     'class' => 'border-1 border-gray-300 p-1 w-full'
                 ]
             ])
+            ->add('image', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
+                ]
+            ])
             ->add('Valider', SubmitType::class, [
                 'attr' => [
                     'class'=> 'w-auto bg-green-500 hover:bg-green-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'

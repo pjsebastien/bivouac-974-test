@@ -100,6 +100,26 @@ class Bivouac
      */
     private $lon;
 
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $adresse;
+
+    /**
+     * @ORM\Column(type="text", nullable=true)
+     */
+    private $itineraire;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $prix;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $lien;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -357,6 +377,54 @@ class Bivouac
     public function setLon(?string $lon): self
     {
         $this->lon = $lon;
+
+        return $this;
+    }
+
+    public function getAdresse(): ?string
+    {
+        return $this->adresse;
+    }
+
+    public function setAdresse(?string $adresse): self
+    {
+        $this->adresse = $adresse;
+
+        return $this;
+    }
+
+    public function getItineraire(): ?string
+    {
+        return $this->itineraire;
+    }
+
+    public function setItineraire(?string $itineraire): self
+    {
+        $this->itineraire = $itineraire;
+
+        return $this;
+    }
+
+    public function getPrix(): ?string
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(?string $prix): self
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    public function getLien(): ?string
+    {
+        return $this->lien;
+    }
+
+    public function setLien(?string $lien): self
+    {
+        $this->lien = $lien;
 
         return $this;
     }

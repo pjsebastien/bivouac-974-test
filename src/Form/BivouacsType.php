@@ -72,13 +72,6 @@ class BivouacsType extends AbstractType
                         ->orderBy('t.name', 'ASC');
                 }                    
             ])
-            ->add('gps', TextType::class, [
-                'label' => false, 
-                'required' => false,
-                'attr' => [
-                    'class' => 'border-1 border-gray-300 p-1 w-full'
-                ]
-            ])
             ->add('lat', TextType::class, [
                 'label' => false, 
                 'required' => false,
@@ -93,6 +86,34 @@ class BivouacsType extends AbstractType
                 'attr' => [
                     'class' => 'border-1 border-gray-300 p-1 w-full',
                     'id' => 'lon'
+                ]
+            ])
+            ->add('adresse', TextType::class, [
+                'label' => false, 
+                'required' => false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
+                ]
+            ])
+            ->add('itineraire', TextType::class, [
+                'label' => false, 
+                'required' => false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
+                ]
+            ])
+            ->add('prix', TextType::class, [
+                'label' => false, 
+                'required' => false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
+                ]
+            ])
+            ->add('lien', TextType::class, [
+                'label' => false, 
+                'required' => false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
                 ]
             ])
 

@@ -30,6 +30,11 @@ class Tag
      */
     private $bivouac;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $image;
+
     
 
     public function __construct()
@@ -74,6 +79,18 @@ class Tag
     public function removeBivouac(bivouac $bivouac): self
     {
         $this->bivouac->removeElement($bivouac);
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
 
         return $this;
     }

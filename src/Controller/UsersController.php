@@ -7,6 +7,7 @@ use App\Entity\Tag;
 use App\Entity\Images;
 use App\Form\BivouacsType;
 use App\Form\EditProfileType;
+use App\Repository\BivouacRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DomCrawler\Image;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,9 +21,10 @@ class UsersController extends AbstractController
     /**
      * @Route("/users", name="users")
      */
-    public function index(): Response
+    public function index(BivouacRepository $bivouacRepo): Response
     {
         return $this->render('users/index.html.twig', [
+            'totalBivouac' => $bivouacRepo->findAll(),
         ]);
     }
     /**
@@ -92,7 +94,7 @@ class UsersController extends AbstractController
     /**
      * @Route("/users/profil/modif", name="users_profil_modifier")
      */
-    public function editProfile(Request $request)
+    public function editProfile( Request $request)
     {
         $user = $this->getUser();
 
