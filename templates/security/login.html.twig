@@ -8,7 +8,7 @@
 {% block body %}
 
     {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        <div class="w-2/3 mx-auto bg-red-400 rounded-xl p-2 text-center uppercase font-semibold text-white">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
 
     {% if app.user %}
@@ -18,45 +18,60 @@
 
     {% else %}
 
-    <div class="flex justify-center items-center mt-20" >
-		<form class="p-10 bg-white rounded-xl flex justify-center items-center flex-col shadow-md" method="post">
-			<div class="w-auto h-auto rounded-full mb-6">
-                <img class="w-16 lg:w-20 h-16 lg:h-20 object-cover rounded-full shadow cursor-pointer mx-auto" alt="Profile-user" src="{{asset('galerie/profile-user.png')}}">
+    <div class="">
+        <div class='flex  md:w-3/4 lg:w-3/5 my-2 sm:my-10 bg-white shadow-md rounded-lg overflow-hidden mx-auto'>
+            {% for message in app.flashes('message') %}
+            <div class="col-xs4">
+                <div class="p-3 my-2 rounded-2 success">{{message}}</div>
+            </div>   
+            {% endfor %}
+            <div class='flex-col items-center w-full'>
+                <div class='w-full'>
+                    <div class="flex flex-row flex-wrap mt-2 px-2 py-3 mx-3 items-center">
+                        <div class="w-1/6 h-auto rounded-full">
+                            <img class="w-16 lg:w-20 h-16 lg:h-20 object-cover rounded-full shadow cursor-pointer mx-auto" alt="Profile-user" src="{{asset('galerie/profile-user.png')}}">
+                        </div>
+                        <div class="w-4/6 flex flex-col mb-2 ml-4 mt-1">
+                            <div class='text-gray-600 text-xl font-bold uppercase ml-12 '>Bienvenue sur Bivouac974</div>
+                            
+                        </div>
+                    </div>
+                    <div class="border-b border-gray-100"></div>   
+                    <div class='text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2'>
+                        <img class=" mx-auto w-48 " alt="user" src="{{asset('logo/main.png')}}">
+                        <p class="text-center text-2xl mt-2">Me connecter </p>                                   
+                    </div>               
+                </div>
+                <div class='text-gray-600 my-10 mx-3 px-2'>
+                    <div class="bg-gray-50 border-b border-gray-200" id="">
+                        <form class="p-10 bg-white rounded-xl flex flex-col shadow-md" method="post">
+                            <label class="text-xl text-gray-600 text-start w-3/4 mx-auto">Votre mail</label>
+                            <input type="email" placeholder="" value="{{ last_username }}" name="email" id="inputEmail" class="bg-gray-200 border-1 border-gray-300 p-1 w-full sm:w-3/4 mb-6 mx-auto h-10 rounded-xl pl-2" autocomplete="email" required autofocus>
+                            <label class="text-xl text-gray-600  w-3/4 mx-auto">Votre mot de passe</label>
+                            <input type="password" placeholder="" name="password" id="inputPassword" class="bg-gray-200 border-1 border-gray-300 p-1 w-full sm:w-3/4 mx-auto h-10 rounded-xl pl-2" autocomplete="current-password" required>
+                            <input type="hidden" name="_csrf_token"
+                            value="{{ csrf_token('authenticate') }}"
+                            >
+                            <p class="text-xs  mb-1 mt-2 text-gray-600 hover:text-black text-center"><a href="{{path('app_forgot_password_request')}}">Mot de passe oublié ?</a></p>
+                            <p class="text-xs  mb-10 text-gray-600 hover:text-black text-center"><a href="{{path('app_register')}}">Pas encore enregistrer ?</a></p>
+                            <label class="w-full text-center mb-3">
+                                <input  type="checkbox" name="_remember_me"> Rester connecté
+                            </label>
+                            <button class="bg-green-400 hover:bg-green-600 text-white font-bold p-2 rounded-xl w-80 mx-auto" type="submit"><span>Login</span></button>
+                        </form>
+                        
+
+                    </div>             
+                </div>         
             </div>
-			<p class="mb-5 text-3xl fot-bold text-gray-600">Connection</p>
-			<input type="email" placeholder="Adresse mail" value="{{ last_username }}" name="email" id="inputEmail" class="mb-5 p-3 w-80 focus:border-green-500 rounded border-2 outline-none form-control" autocomplete="email" required autofocus>
-			<input type="password" placeholder="Mot de passe" name="password" id="inputPassword" class="form-control p-3 w-80 focus:border-green-500 rounded border-2 outline-none" autocomplete="current-password" required>
-            <input type="hidden" name="_csrf_token"
-            value="{{ csrf_token('authenticate') }}"
-            >
-            <p class="text-xs  mb-1 mt-2 text-gray-600 hover:text-black"><a href="{{path('app_forgot_password_request')}}">Mot de passe oublié ?</a></p>
-            <p class="text-xs  mb-10 text-gray-600 hover:text-black"><a href="{{path('app_register')}}">Pas encore enregistrer ?</a></p>
-			<button class="bg-green-400 hover:bg-green-600 text-white font-bold p-2 rounded-xl w-80" type="submit"><span>Login</span></button>
-		</form>
-        <br>
-        
-	</div>
+        </div>
+      </div>
+
+
     
     
 
-    <!-- <form method="post">
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    
-    <label for="inputPassword">Password</label>
-    
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-
-    </form> -->
-
-    <!-- <p><a href="{{path('app_forgot_password_request')}}">Mot de passe oublié ?</a></p> -->
         
     {% endif %}
 

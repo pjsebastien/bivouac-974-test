@@ -26,7 +26,7 @@ crossorigin=""/>
 			<div class="flex px-3 mt-2"><img src="{{asset('galerie/gites.png')}}" alt="" class="w-5 h-5"><span class="px-1 text-sm">Gites</span></div>
 			<div class="flex px-3 mt-2"><img src="{{asset('galerie/geo.png')}}" alt="" class="w-5 h-5"><span class="px-1 text-sm">Géolocalisation</span></div>
 		</div>
-	  <div class="xl:w-3/6 lg:w-5/6  w-full mb-10 object-cover object-center rounded shadow-lg" id="mapid"></div>
+	  <div class="xl:w-3/6 lg:w-5/6  w-full mb-10 object-cover object-center rounded shadow-lg z-10" id="mapid"></div>
 	  <div class="w-full md:w-2/3 flex flex-col mb-16 items-center text-center">
 		<h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">Trouvez et partagez gratuitement vos meilleurs spots !</h1>
 		<h2 class="title-font text-xl mb-4 font-medium text-gray-900">Chercher où dormir parmis nos {{totalBivouac|length}} spots à la Réunion. </h2>
@@ -96,7 +96,7 @@ crossorigin=""/>
 			</div>
 
 
-			<h2 class="text-lg text-gray-900 font-medium title-font mb-4"><a href="{{path('bivouacs_details', {slug : bivouac.slug})}}">{{bivouac.title}}</a></h2>
+			<h2 class="text-lg text-gray-900 font-medium title-font mb-4"><a href="{{path('bivouacs_details', {slug : bivouac.slug})}}">{{bivouac.title|u.truncate(40, '...')}}</a></h2>
 			{# Attention la description est en html, on met le filtre striptags pour y remedier et si l'annonce est trop longue on limite le nombre de caractere on parametre avec twig string extra #}
 			<p class="leading-relaxed text-base h-24">{{bivouac.content|striptags|u.truncate(80, '...')}}</p>
 			<div class="text-green-600">		
@@ -129,8 +129,12 @@ crossorigin=""/>
 	</div>
 	  <div class="flex flex-wrap w-full mx-auto mt-24 justify-items-center">
 		{% if is_granted("ROLE_USER") %}
+
 		<h2 class="text-2xl font-bold uppercase w-full text-center my-5 items-center">Mes favoris :</h2>
+
+		
 			{% for bivouac in totalBivouac %}
+			
 				{% for favoris in bivouac.favoris %}
 							{% if favoris.id == app.user.id %}
 							<a class="w-full md:w-1/2 xl:w-1/3 mx-auto my-6 justify-center" href="{{path('bivouacs_details', {slug : bivouac.slug})}}">

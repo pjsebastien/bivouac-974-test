@@ -16,13 +16,13 @@
 
         <header x-data="{ mobileMenuOpen : false }" class="flex flex-wrap flex-row justify-between md:items-center md:space-x-4 bg-white py-1 px-6 relative">
             <a href="{{ path('app_home') }}" class="block">
-                <span class="sr-only">Super Bivouac Run</span>
+                <span class="sr-only">Bivouac 974</span>
                 <img class="h-20 md:h-24" src="/logo/main.png" alt="bivouac 974 logo" title="Bivouac">
             </a>
             <button @click="mobileMenuOpen = !mobileMenuOpen" class="inline-block md:hidden w-8 h-8 bg-gray-200 text-gray-600 mt-5">
               <svg fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
             </button>
-            <nav class="absolute md:relative top-16 left-0 md:top-0 z-20 md:flex flex-col md:flex-row md:space-x-6 font-semibold w-full md:w-auto bg-white shadow-md rounded-lg md:rounded-none md:shadow-none md:bg-transparent p-6 mt-8 md:p-0 md:mt-0"
+            <nav class="z-100 absolute md:relative top-16 left-0 md:top-0 z-20 md:flex flex-col md:flex-row md:space-x-6 font-semibold w-full md:w-auto bg-white shadow-md rounded-lg md:rounded-none md:shadow-none md:bg-transparent p-6 mt-8 md:p-0 md:mt-0"
             :class="{ 'flex' : mobileMenuOpen , 'hidden' : !mobileMenuOpen}"  @click.away="mobileMenuOpen = false"
             >
                 <a href="{{ path('app_home') }}" class="block py-1 text-gray-600 hover:underline" >Accueil</a>

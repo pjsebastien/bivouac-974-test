@@ -5,6 +5,7 @@
 {% block body %}
 
 
+
 <div class="">
     <div class='flex  md:w-3/4 lg:w-3/5  my-2 lg:my-10 bg-white shadow-md rounded-lg overflow-hidden mx-auto'>
         <div class='flex items-center w-full'>
@@ -29,7 +30,7 @@
                 <div class="border-b border-gray-100"></div>
 
      
-                <div class='text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2'>
+                <div class=' text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2'>
                     {% for image in bivouac.images %}
                     <img class="rounded mx-auto" alt="{{bivouac.title}}" src="{{asset('uploads/' ~ image.name )|imagine_filter('carousel')}}">
                     {% endfor %} 
@@ -146,7 +147,7 @@
 	
 {% endblock %}
 
-{% block javascript %}
+{% block javascripts %}
 
 
 {% endblock %}
