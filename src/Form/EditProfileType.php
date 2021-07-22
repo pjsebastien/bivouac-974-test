@@ -14,9 +14,23 @@ class EditProfileType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class)
-            ->add('firstname', TextType::class)
-            ->add('Valider', SubmitType::class)
+            ->add('name', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
+                ]
+            ])
+            ->add('firstname', TextType::class, [
+                'label' => false,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
+                ]
+            ])
+            ->add('Envoyer', SubmitType::class, [
+                'attr' => [
+                    'class'=> 'w-auto bg-green-500 hover:bg-green-700 rounded-lg shadow-xl font-medium text-white px-4 py-2'
+                ]
+            ])
         ;
     }
 

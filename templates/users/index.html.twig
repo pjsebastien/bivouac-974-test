@@ -15,7 +15,7 @@ endblock %}
             <div class='w-full'>
                 <div class="flex flex-row flex-wrap mt-2 px-2 py-3 mx-3">
                     <div class="w-1/6 h-auto rounded-full">
-                        <img class="w-16 lg:w-20 h-16 lg:h-20 object-cover rounded-full shadow cursor-pointer mx-auto" alt="Logo auberge de jeunesse" src="{{asset('galerie/profile-user.png')}}">
+                        <img class="w-16 lg:w-20 h-16 lg:h-20 object-cover rounded-full shadow cursor-pointer mx-auto" alt="Profile-user" src="{{asset('galerie/profile-user.png')}}">
                     </div>
                     <div class="w-4/6 flex flex-col mb-2 ml-4 mt-1">
                         <div class='text-gray-600 text-xl font-bold uppercase'>Profil de {{ app.user.firstname }} {{ app.user.name }}</div>
@@ -90,7 +90,7 @@ endblock %}
                                                 <div id="header" class="flex items-center"> 
                                                 <img alt="{{bivouac.title}}" class="w-24 rounded-xl border-2 border-gray-300" src="{{asset('uploads/' ~ bivouac.images[0].name )|imagine_filter('square')}}" />
                                                 <div id="header-text" class="leading-5 ml-6 sm">
-                                                    <h4 class="text-xl font-semibold">{{bivouac.title}}</h4>
+                                                    <h4 class="text-xl font-semibold">{{bivouac.title|u.truncate(30, '...')}}</h4>
                                                     <h5 class="font-semibold text-green-600">{{bivouac.categories.name}}</h5>
                                                     {% for region in bivouac.regions %}
                                                         <h5 class=" text-green-400">{{region.name}}</h5>

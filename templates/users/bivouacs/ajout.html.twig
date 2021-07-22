@@ -10,65 +10,79 @@ crossorigin=""/>
 {% endblock %}
 
 {% block body %}
+<style>
+#bivouacs_regions> label {
+  margin-left: 4px;
+  margin-right: 12px;
+}
+#bivouacs_tags> label {
+  margin-left: 4px;
+  margin-right: 12px;
+}
 
+#mapid {
+    height: 300px;
+}
+</style>
     
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-gray-50 overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 bg-green-50 border-b border-gray-200">
-                    <h1 class="text-center font-bold text-xl uppercase text-gray-600 mb-6">Ajouter un bivouac : </h1>
+                <div class="p-6 bg-gray-50 border-b border-gray-200" id="add-bivouac">
+                    <h1 class="text-center font-bold text-2xl uppercase text-gray-600 my-10">Ajouter un bivouac : </h1>
                     {{ form_start(form) }}
-                    <div class="mb-4">
+                    <div class="mb-8">
                         <label class="text-xl text-gray-600">Titre du bivouac <span class="text-red-500">*</span></label></br>
                         {{form_row(form.title)}}
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-8">
                         <label class="text-xl text-gray-600">Catégorie <span class="text-red-500">*</span></label><br>
                         {{form_row(form.Categories)}}
-                    </div>                   
-                    <div class="mb-4">
-                        <label class="text-xl text-gray-600 text-center">Ou sélectionner sur la carte </label><br>
-                        <div class="w-full" id="mapid"></div>
+                    </div>                 
+                    <div class="mb-8">
+                        <label class="text-xl text-gray-600 text-center mb-4">Sélectionner le spot sur la carte </label><br>
+                        <div class="w-full mx-auto mt-2" id="mapid"></div>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-8">
                         <label class="text-xl text-gray-600">Latitude </label><br>
                         {{form_row(form.lat)}}
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-8">
                         <label class="text-xl text-gray-600">Longitude </label><br>
                         {{form_row(form.lon)}}
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-8">
                         <label class="text-xl text-gray-600">Description <span class="text-red-500">*</span></label><br>
+                        <div id="editor"></div>
                         {{form_row(form.content)}}
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-8">
                         <label class="text-xl text-gray-600">Adresse du lieu</label><br>
                         {{form_row(form.adresse)}}
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-8">
                         <label class="text-xl text-gray-600">Itinéraire détaillé</label><br>
                         {{form_row(form.itineraire)}}
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-8">
                         <label class="text-xl text-gray-600">Prix approximatif ( si payant)</label><br>
                         {{form_row(form.prix)}}
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-8">
                         <label class="text-xl text-gray-600">Lien internet ( si éxistant )</label><br>
                         {{form_row(form.lien)}}
                     </div>
-                    <div class="mb-4 ">
+                    <div class="mb-8 ">
                         <label class="text-xl text-gray-600">Sélectionner les services disponibles <span class="text-red-500">*</span></label><br>
                             <div class="pr-3">{{form_row(form.tags)}}</div>
                     </div>
-                    <div class="mb-4 ">
+                    <div class="mb-8 ">
                         <label class="text-xl text-gray-600">Sélectionner une région <span class="text-red-500">*</span></label><br>
                         {{form_row(form.regions)}}
                     </div>
 
-                    <div class="grid grid-cols-1 mb-4">
+                    <div class="grid grid-cols-1 mb-8">
                         <label class="text-xl text-gray-600">Sélectionner une ou des photos <span class="text-red-500">*</span></label><br>
                           <div class="flex items-center justify-center w-full">
                               <label class="flex flex-col border-4 border-dashed w-full h-32 hover:bg-gray-100 hover:border-green-300 group">
@@ -197,4 +211,9 @@ function addMarker(pos){
 </script>
     
 
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
+    <script src="{{asset('js/ckeditor.js')}}"></script>
 {% endblock %}

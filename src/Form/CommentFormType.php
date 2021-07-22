@@ -17,14 +17,14 @@ class CommentFormType extends AbstractType
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Saisir votre nom...',
-                    'class' => 'rounded-full w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue'
+                    'class' => 'rounded-2xl w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue'
                 ]
             ])
             ->add('text', null, [
                 'label' => false,
                 'attr' => [
                     'placeholder' => 'Saisir votre commentaire...',
-                    'class' => 'rounded-full mt-2 w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue'
+                    'class' => 'rounded-2xl mt-2 w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue'
                 ]
             ])
             ->add('submit', SubmitType::class, [

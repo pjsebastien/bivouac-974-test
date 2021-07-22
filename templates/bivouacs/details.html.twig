@@ -6,7 +6,7 @@
 
 
 <div class="">
-    <div class='flex  md:w-3/4 lg:w-3/5 my-10 bg-white shadow-md rounded-lg overflow-hidden mx-auto'>
+    <div class='flex  md:w-3/4 lg:w-3/5  my-2 lg:my-10 bg-white shadow-md rounded-lg overflow-hidden mx-auto'>
         <div class='flex items-center w-full'>
             <div class='w-full'>
                 <div class="flex flex-row flex-wrap mt-2 px-2 py-3 mx-3">
@@ -35,7 +35,7 @@
                     {% endfor %} 
                 </div>
                 <div class='text-gray-600 font-semibold text-lg mb-2 mx-3 px-2'>{{bivouac.title}}</div>
-                <div class='text-gray-500 font-thin text-sm mb-6 mx-3 px-2'>{{bivouac.content|striptags}}</div>
+                <div class='text-gray-500 font-thin text-sm mb-6 mx-3 px-2'>{{bivouac.content|raw}}</div>
                 {% if bivouac.adresse != null %}
                     <div class='text-gray-600 font-semibold text-lg mb-2 mx-3 px-2'>Adresse :</div>
                     <div class='text-gray-500 font-thin text-sm mb-6 mx-3 px-2'>{{bivouac.adresse|striptags}}</div>
@@ -128,7 +128,7 @@
                 <div class="relative flex items-center self-center w-full lg:px-12  p-4 overflow-hidden text-gray-600 focus-within:text-gray-400">
                     <img class='w-10 h-10 object-cover rounded-full shadow mr-2 cursor-pointer' alt='User avatar' src="{{asset('galerie/homeAdd.png')}}">
                     
-                    <div class="rounded-full mt-2 w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"><span class="text-xs ">Le {{comment.createdAt|date("d/m/Y H:i")}}, <strong>{{comment.user}}</strong> à écrit :</span><hr>
+                    <div class="rounded-2xl mt-2 w-full py-2 pl-4 pr-10 text-sm bg-gray-100 border border-transparent appearance-none rounded-tg placeholder-gray-400 focus:bg-white focus:outline-none focus:border-blue-500 focus:text-gray-900 focus:shadow-outline-blue"><span class="text-xs ">Le {{comment.createdAt|date("d/m/Y H:i")}}, <strong>{{comment.user}}</strong> à écrit :</span><hr>
                         <p class="mt-4 mb-2 ml-2">{{comment.text}}</p></div>
                 </div>
         

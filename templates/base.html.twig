@@ -7,6 +7,9 @@
         {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans&display=swap" rel="stylesheet">
     </head>
     <body class="min-h-screen bg-gray-200">
 
@@ -33,6 +36,8 @@
                 <a href="{{ path('app_login') }}" class="block py-1 text-gray-600 hover:underline" >Login</a>
                 <a href="{{ path('app_register') }}" class="block py-1 text-gray-600 hover:underline" >S'enregistrer</a> 
                 {% endif %}
+
+                <a href="{{ path('contact') }}" class="block py-1 text-gray-600 hover:underline" >Nous contacter</a>
                                 
                 {% if is_granted('ROLE_ADMIN') %}
                 <div class="group inline-block">
@@ -77,6 +82,11 @@
                 {% endif %}
             </nav>
         </header>
+        {% for message in app.flashes('message') %}
+        <div class="w-5/6 bg-green-400 text-center rounded-xl mx-auto">
+            <div class="p-3 my-2 uppercase font-semibold">{{message}}</div>
+        </div> 
+        {% endfor %} 
           
           
 

@@ -1,8 +1,5 @@
 {% extends 'base.html.twig' %}
 
-
-
-
 {% block title %}Liste des bivouacs
 {% endblock %}
 {% block stylesheets %}
@@ -17,78 +14,12 @@
 <section class="text-gray-600 body-font">
 	<!-- partie filtrage/recherche avancée -->
 
-	<div class="max-w-7xl mx-auto">
-
-		{% include "bivouacs/_bivouacFilters.html.twig" %}
-
-		<div class="">
-			<h2>Filtrer</h2>
-			<form id="filters" class="flex flex-col">
-				<div class="mb-0">
-					
-					<ul class="ks-cboxtags">
-					<h2>Catégories</h2>
-					{% for categorie in categories %}
-					<!-- on verifie si la categorie est dans les parametres -->
-						{% if queryParams is not empty and queryParams.categories is defined %}
-							{% set checked = (categorie.id in queryParams.categories) ? "checked" : "" %}
-						{% else %}
-							{% set checked = "" %}
-						{% endif %}
-							<li><input type="checkbox" name="categories[]" id="cat{{categorie.id}}" value="{{categorie.id}}" {{checked}}><label for="cat{{categorie.id}}">{{categorie.name}}</label></li>					
-					{% endfor %}
-					</ul>
-				</div>
-				
-				<div class="">
-					<ul class="ks-cboxtags">
-					<h2>Region</h2>
-					{% for region in regions %}
-					<!-- on verifie si la regions est dans les parametres -->
-						{% if queryParams is not empty and queryParams.region is defined %}					
-							{% set checked = (region.id in queryParams.region) ? "checked" : "" %}
-						{% else %}
-							{% set checked = "" %}
-						{% endif %}
-							<li><input type="checkbox" name="region[]" id="reg{{region.id}}" value="{{region.id}}" {{checked}}><label for="reg{{region.id}}">{{region.name}}</label></li>					
-					{% endfor %}
-					</ul>
-				</div>
-
-				<div class="">
-					<ul class="ks-cboxtags">
-					<h2>Tags</h2>
-					{% for tag in tags %}
-						<!-- on verifie si la regions est dans les parametres -->
-						{% if queryParams is not empty and queryParams.tag is defined %}					
-							{% set checked = (tag.id in queryParams.tag) ? "checked" : "" %}
-						{% else %}
-							{% set checked = "" %}
-						{% endif %}
-							<li><input type="checkbox" name="tag[]" id="tag{{tag.id}}" value="{{tag.id}}" {{checked}}><label for="tag{{tag.id}}">{{tag.name}}</label></li>					
-					{% endfor %}
-					</ul>
-				</div>
-				
-				
-
-				<input type="hidden" name="page" value="{{page}}">
-			</form>
-		</div>
+	<div class="max-w-2xl mx-auto px-4">
+		{% include "bivouacs/_bivouacFilters.html.twig" %}		
 	</div>
 
-
-
-
-
-
-
-	<!-- Listes des bivouacs et pagination -->
-			
-		{% include "bivouacs/_bivouacCard.html.twig" %}		
-	  
-
-	
+	<!-- Listes des bivouacs et pagination -->			
+		{% include "bivouacs/_bivouacCard.html.twig" %}			
 </section>
 	
 {% endblock %}

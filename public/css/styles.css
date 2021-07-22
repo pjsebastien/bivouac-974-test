@@ -1,4 +1,6 @@
-
+body {
+  font-family: 'Nunito Sans', sans-serif;
+}
 
 /* Bouton filtre ajax dans liste bivouac */
 
@@ -73,6 +75,12 @@ ul.ks-cboxtags li input[type="checkbox"]:focus + label {
 
 #mapid {
    height: 600px; 
+}
+
+/* Ckeditor */
+
+#editor {  
+  background-color: white;
 }
 
 

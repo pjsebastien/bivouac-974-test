@@ -10,12 +10,11 @@ use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 
 class BivouacsType extends AbstractType
 {
@@ -35,12 +34,7 @@ class BivouacsType extends AbstractType
                     'class' => 'border-1 border-gray-300 p-1 w-full'
                 ]
             ])
-            ->add('content', TextareaType::class, [
-                'label'=> false,
-                'attr' => [
-                    'class' => 'border-1 border-gray-300 p-1 w-full'
-                ]
-            ])
+            
             
             ->add('tags', EntityType::class, [
                 'class' => Tag::class, 
@@ -88,6 +82,7 @@ class BivouacsType extends AbstractType
                     'id' => 'lon'
                 ]
             ])
+            ->add('content', HiddenType::class)
             ->add('adresse', TextType::class, [
                 'label' => false, 
                 'required' => false,

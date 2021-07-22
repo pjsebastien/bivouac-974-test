@@ -31,7 +31,7 @@ class BivouacsController extends AbstractController
      */
     public function index(BivouacRepository $bivouacsRepo,CategoriesRepository $CatRepo,RegionRepository $RegionRepo,TagRepository $TagRepo, Request $request){
         //On définit le nombre d'élément par package
-        $limit = 8;
+        $limit = 9;
         //On récupère le num de page
         $page = (int)$request->query->get("page", 1);
 
