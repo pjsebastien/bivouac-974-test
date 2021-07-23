@@ -6,39 +6,67 @@
 {% block body %}
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/axentix@1.3.1/dist/css/axentix.min.css">
 
-	<h1 class="py-5 text-center">Gérer les bivouacs</h1>
-	<table class="table striped">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Titre</th>
-				<th>Date</th>
-				<th>Active</th>
-				<th class="float-right mr-4"></th>
-			</tr>
-		</thead>
-		<tbody>
-			{% for bivouac in bivouacs %}
-				<tr>
-					<td>{{bivouac.id}}</td>
-					<td>{{bivouac.title}}</td>
-					<td>{{bivouac.createdAt|date}}</td>
-					<td>
-						<label class="form-switch mt-2">
-							<input id="checkbox" type="checkbox" {{ (bivouac.active) ? 'checked' : ''}} data-id="{{bivouac.id}}">
-							<span class="slider"></span>
-						</label>
-					</td>
-					<td class="text-center float-right">
-						
-						<a href="{{ path('users_bivouacs_modifier', {id: bivouac.id})}}" class="btn shadow-1 rounded-1 blue" >Modifier</a>
-						
-						<a href="#" class="btn primary press modal-trigger" data-target="modal-delete" data-id="{{bivouac.id}}" data-titre="{{bivouac.title}}">Supprimer</a>
-					</td>
-				</tr>
-			{% endfor %}
-		</tbody>
-	</table>
+<div class="">
+    <div class='flex  md:w-3/4 lg:w-3/5 my-10 bg-white shadow-md rounded-lg overflow-hidden mx-auto'>
+        {% for message in app.flashes('message') %}
+        <div class="col-xs4">
+            <div class="p-3 my-2 rounded-2 success">{{message}}</div>
+        </div>   
+        {% endfor %}
+        <div class='flex-col items-center w-full'>
+            <div class='w-full'>
+                <div class="flex flex-row flex-wrap mt-2 px-2 py-3 mx-3 items-center">
+                    <div class="w-1/6 h-auto rounded-full">
+                        <img class="w-16 lg:w-20 h-16 lg:h-20 object-cover rounded-full shadow cursor-pointer mx-auto" alt="Profile-user" src="{{asset('logo/main.png')}}">
+                    </div>
+                    <div class="w-4/6 flex flex-col mb-2 ml-4 mt-1">
+                        <div class='text-gray-600 text-xl font-bold uppercase ml-12 '>Gérer les bivouacs</div>
+                        
+                    </div>
+                </div>
+                <div class="border-b border-gray-100"></div>
+
+     
+                <div class='text-gray-400 font-medium text-sm mb-7 mt-6 mx-3 px-2'>
+                    <img class=" mx-auto w-32 my-8 " alt="user" src="{{asset('galerie/modif.png')}}"> 
+					                               
+                </div>               
+            </div>
+            <div class='text-gray-600 my-10 mx-3 px-2'>	
+				<table class="table striped mt-8">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Titre</th>
+								<th>Date</th>
+								<th>Active</th>
+							</tr>
+						</thead>
+						<tbody>
+							{% for bivouac in bivouacs %}
+								<tr>
+									<td>{{bivouac.id}}</td>
+									<td style="max-width: 170px;">{{bivouac.title}}</td>
+									<td>{{bivouac.createdAt|date}}</td>
+									<td>
+										<label class="form-switch mt-2">
+											<input id="checkbox" type="checkbox" {{ (bivouac.active) ? 'checked' : ''}} data-id="{{bivouac.id}}">
+											<span class="slider"></span>
+										</label>
+									</td>
+									<td class="text-center float-right">
+										
+										<a href="{{ path('users_bivouacs_modifier', {id: bivouac.id})}}" class="btn bg-green-500 hover:bg-green-700 rounded-lg shadow-xl font-medium text-white px-4 py-2" >Modifier</a>
+										<a href="#" class="btn bg-green-500 hover:bg-green-700 rounded-lg shadow-xl font-medium text-white px-4 py-2 press modal-trigger" data-target="modal-delete" data-id="{{bivouac.id}}" data-titre="{{bivouac.title}}">Supprimer</a>
+									</td>
+								</tr>
+							{% endfor %}
+						</tbody>
+				</table>               
+            </div>            
+        </div>
+    </div>
+</div>
 
 
 	<div class="modal white falling" id="modal-delete">
@@ -48,10 +76,11 @@
 		</div>
 		<div class="divider"></div>
 		<div class="modal-footer">
-			<a href="" class="btn red">Valider</a>
-			<button data-target="modal-delete" class="ml-auto btn small primary modal-trigger">Close</button>
+			<a href="" class="btn bg-green-500 hover:bg-green-700 rounded-lg shadow-xl font-medium text-white px-4 py-2">Valider</a>
+			<button data-target="modal-delete" class="bg-green-500 hover:bg-green-700 rounded-lg shadow-xl font-medium text-white px-4 py-2 modal-trigger " style="float: right;">Fermer</button>
 		</div>
 	</div>
+
 {% endblock %}
 
 

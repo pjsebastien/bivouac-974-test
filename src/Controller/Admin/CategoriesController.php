@@ -71,4 +71,18 @@ class CategoriesController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+        /**
+     * @Route("/supprimer/{id}", name="supprimer")
+     */
+    public function supprimer(Categories $categorie)
+    {
+     
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($categorie);
+        $em->flush();
+
+        $this->addFlash('message', 'Catégorie supprimée avec succès');
+        return $this->redirectToRoute('admin_categories_home');       
+    } 
 }

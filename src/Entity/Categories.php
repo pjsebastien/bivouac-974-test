@@ -32,7 +32,7 @@ class Categories
 
     /**
      * @ORM\ManyToOne(targetEntity=Categories::class, inversedBy="categories")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $parent;
 

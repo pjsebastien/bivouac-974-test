@@ -71,4 +71,18 @@ class TagController extends AbstractController
             'form' => $form->createView()
         ]);
     }
+
+    /**
+     * @Route("/supprimer/{id}", name="supprimer")
+     */
+    public function supprimer(Tag $tag)
+    {
+     
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($tag);
+        $em->flush();
+
+        $this->addFlash('message', 'Service supprimé avec succès');
+        return $this->redirectToRoute('admin_tag_home');       
+    } 
 }
