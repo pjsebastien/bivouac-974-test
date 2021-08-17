@@ -45,9 +45,9 @@
                 <div class='text-gray-600 my-10 mx-3 px-2'>
                     <div class="bg-gray-50 border-b border-gray-200" id="">
                         <form class="p-10 bg-white rounded-xl flex flex-col shadow-md" method="post">
-                            <label class="text-xl text-gray-600 text-start w-3/4 mx-auto">Votre mail</label>
+                            <label class="text-xl text-gray-600 text-start w-full sm:w-3/4 mx-auto">Votre mail</label>
                             <input type="email" placeholder="" value="{{ last_username }}" name="email" id="inputEmail" class="bg-gray-200 border-1 border-gray-300 p-1 w-full sm:w-3/4 mb-6 mx-auto h-10 rounded-xl pl-2" autocomplete="email" required autofocus>
-                            <label class="text-xl text-gray-600  w-3/4 mx-auto">Votre mot de passe</label>
+                            <label class="text-xl text-gray-600  w-full sm:w-3/4 mx-auto">Votre mot de passe</label>
                             <input type="password" placeholder="" name="password" id="inputPassword" class="bg-gray-200 border-1 border-gray-300 p-1 w-full sm:w-3/4 mx-auto h-10 rounded-xl pl-2" autocomplete="current-password" required>
                             <input type="hidden" name="_csrf_token"
                             value="{{ csrf_token('authenticate') }}"
@@ -57,7 +57,7 @@
                             <label class="w-full text-center mb-3">
                                 <input  type="checkbox" name="_remember_me"> Rester connecté
                             </label>
-                            <button class="bg-green-400 hover:bg-green-600 text-white font-bold p-2 rounded-xl w-80 mx-auto" type="submit"><span>Login</span></button>
+                            <button class="bg-green-400 hover:bg-green-600 text-white font-bold p-2 rounded-xl w-60 lg:w-80 mx-auto" type="submit"><span>Login</span></button>
                         </form>
                         
 

@@ -9,6 +9,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -26,7 +27,7 @@ class RegistrationController extends AbstractController
     /**
      * @Route("/register", name="app_register")
      */
-    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer): Response
     {
         $user = new Users();
         $form = $this->createForm(RegistrationFormType::class, $user);
@@ -54,6 +55,14 @@ class RegistrationController extends AbstractController
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
             // do anything else you need here, like send an email
+            $email = (new TemplatedEmail())
+                ->from('pj.sebastien@gmail.com')
+                ->to('pj.sebastien@gmail.com')
+                ->subject('Nouveau membre dans bivouac974')
+                ->htmlTemplate('emails/ajoutmembre.html.twig');
+            $mailer->send($email);
+
+            $this->addFlash('message', 'Votre compte a bien été créé, vérifiez votre boite mail pour l\'activer !');
 
             return $this->redirectToRoute('app_home');
         }

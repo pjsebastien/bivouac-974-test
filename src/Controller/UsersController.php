@@ -8,10 +8,12 @@ use App\Entity\Images;
 use App\Form\BivouacsType;
 use App\Form\EditProfileType;
 use App\Repository\BivouacRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DomCrawler\Image;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoder;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -30,7 +32,7 @@ class UsersController extends AbstractController
     /**
      * @Route("/users/bivouacs/ajout", name="users_bivouacs_ajout")
      */
-    public function ajoutBivouac(Request $request)
+    public function ajoutBivouac(Request $request, MailerInterface $mailer)
     {
         $bivouac = new Bivouac;
 
@@ -61,14 +63,24 @@ class UsersController extends AbstractController
             $em->persist($bivouac);
             $em->flush();
 
+            $email = (new TemplatedEmail())
+                ->from('pj.sebastien@gmail.com')
+                ->to('pj.sebastien@gmail.com')
+                ->subject('Nouveau spot dans bivouac974')
+                ->htmlTemplate('emails/ajoutspot.html.twig');
+            $mailer->send($email);
+
+            $this->addFlash('message', 'Votre spot à bien été envoyer, il sera ajouté après verification par notre équipe !');
+
             return $this->redirectToRoute('users');
         }
-
         
         return $this->render('users/bivouacs/ajout.html.twig', [
             'form' => $form->createView(),
         ]);
     }
+
+    
     /**
      * @Route("users/bivouacs/modifier/{id}", name="users_bivouacs_modifier")
      */

@@ -3,6 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
         {% block stylesheets %}{{ encore_entry_link_tags('app') }}{% endblock %}
     <link rel="stylesheet" href="{{ asset('css/styles.css') }}" />
@@ -87,10 +88,7 @@
             <div class="p-3 my-2 uppercase font-semibold">{{message}}</div>
         </div> 
         {% endfor %} 
-          
-          
-
-        <main class="bg-gray-200 min-h-screen " >
+        <main class="bg-gray-200 min-h-screen bg " >
             {% block body %}{% endblock %}
             
         </main>
