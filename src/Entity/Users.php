@@ -64,6 +64,11 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
      */
     private $favoris;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $gps;
+
 
     public function __construct()
     {
@@ -249,6 +254,18 @@ class Users implements UserInterface, PasswordAuthenticatedUserInterface
         if ($this->favoris->removeElement($favori)) {
             $favori->removeFavori($this);
         }
+
+        return $this;
+    }
+
+    public function getGps(): ?string
+    {
+        return $this->gps;
+    }
+
+    public function setGps(?string $gps): self
+    {
+        $this->gps = $gps;
 
         return $this;
     }
