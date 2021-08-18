@@ -23,5 +23,6 @@
     },
     "dependencies": {
         "daisyui": "^1.10.0"
-    }
+    },
+    "heroku-postbuild" : "node_modules/.bin/encore production"
 }
