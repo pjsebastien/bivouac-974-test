@@ -15,6 +15,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class BivouacsType extends AbstractType
 {
@@ -82,7 +83,14 @@ class BivouacsType extends AbstractType
                     'id' => 'lon'
                 ]
             ])
-            ->add('content', HiddenType::class)
+            ->add('content', TextareaType::class, [
+                'label' => false, 
+                'required' => true,
+                'attr' => [
+                    'class' => 'border-1 border-gray-300 p-1 w-full'
+                ]
+            ])
+            
             ->add('adresse', TextType::class, [
                 'label' => false, 
                 'required' => false,
@@ -118,7 +126,7 @@ class BivouacsType extends AbstractType
                 'label' => false,
                 'multiple' =>true,
                 'mapped' =>false,
-                'required' => true
+                'required' => false
             ])
             ->add('Valider', SubmitType::class, [
                 'attr' => [

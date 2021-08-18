@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Bivouac;
+use App\Entity\Region;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,7 @@ class ApiController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $bivouacs = $em->getRepository(Bivouac::class)->findBy(array('active' => true), array('created_at' => 'DESC'));
+        $regions = $em->getRepository(Region::class)->findAll();
 
         $data = array();
         foreach ($bivouacs as $key => $bivouac) {
@@ -25,7 +27,14 @@ class ApiController extends AbstractController
             $data[$key]['title'] = $bivouac->getTitle();
             $data[$key]['lon'] = $bivouac->getLon();
             $data[$key]['lat'] = $bivouac->getLat();
+            $data[$key]['content'] = $bivouac->getContent();
+            $data[$key]['adresse'] = $bivouac->getAdresse();
+            $data[$key]['itineraire'] = $bivouac->getItineraire();
+            $data[$key]['prix'] = $bivouac->getPrix();
+            $data[$key]['lien'] = $bivouac->getLien();
+            $data[$key]['createdAt'] = $bivouac->getCreatedAt();
             $data[$key]['categorie'] = $bivouac->getCategories()->getName();
+            $data[$key]['image'] = $bivouac->getCategories()->getImage();
 
         }
         return new JsonResponse($data);

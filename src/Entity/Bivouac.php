@@ -81,7 +81,7 @@ class Bivouac
     private $regions;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="bivouac", cascade={"all"}, orphanRemoval=true)
+     * @ORM\ManyToMany(targetEntity=Tag::class, mappedBy="bivouac")
      */
     private $tags;
 

@@ -70,7 +70,6 @@ crossorigin=""/>
                     </div>
                     <div class="mb-8">
                         <label class="text-xl text-gray-600">Description <span class="text-red-500">*</span></label><br>
-                        <div id="editor"></div>
                         {{form_row(form.content)}}
                     </div>
                     <div class="mb-8">
@@ -231,6 +230,5 @@ function addMarker(pos){
 {% endblock %}
 
 {% block javascripts %}
-    <script src="{{asset('ckeditor/ckeditor.js')}}"></script>
-    <script src="{{asset('js/ckeditor.js')}}"></script>
+
 {% endblock %}
