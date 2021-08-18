@@ -23,6 +23,7 @@ final class Version20210818101748 extends AbstractMigration
         $this->addSql('CREATE TABLE bivouac (id INT AUTO_INCREMENT NOT NULL, users_id INT NOT NULL, categories_id INT NOT NULL, title VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, content LONGTEXT NOT NULL, created_at DATETIME NOT NULL COMMENT \'(DC2Type:datetime_immutable)\', active TINYINT(1) NOT NULL, INDEX IDX_410EEEA567B3B43D (users_id), INDEX IDX_410EEEA5A21214B7 (categories_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE bivouac ADD CONSTRAINT FK_410EEEA567B3B43D FOREIGN KEY (users_id) REFERENCES users (id)');
         $this->addSql('ALTER TABLE bivouac ADD CONSTRAINT FK_410EEEA5A21214B7 FOREIGN KEY (categories_id) REFERENCES categories (id)');
+        $this->addSql('ALTER TABLE users ADD name VARCHAR(255) NOT NULL, ADD firstname VARCHAR(255) NOT NULL');
     }
 
     public function down(Schema $schema): void
