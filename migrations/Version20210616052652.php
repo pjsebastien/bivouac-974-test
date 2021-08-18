@@ -22,7 +22,6 @@ final class Version20210616052652 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE TABLE images (id INT AUTO_INCREMENT NOT NULL, bivouacs_id INT NOT NULL, name VARCHAR(255) NOT NULL, INDEX IDX_E01FBE6A875F8459 (bivouacs_id), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
         $this->addSql('ALTER TABLE images ADD CONSTRAINT FK_E01FBE6A875F8459 FOREIGN KEY (bivouacs_id) REFERENCES bivouac (id)');
-        $this->addSql('ALTER TABLE categories CHANGE parent_id parent_id INT NOT NULL');
     }
 
     public function down(Schema $schema): void

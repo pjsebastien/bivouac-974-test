@@ -20,7 +20,6 @@ final class Version20210611130843 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE categories CHANGE parent_id parent_id INT NOT NULL');
         $this->addSql('ALTER TABLE users ADD name VARCHAR(255) NOT NULL, ADD firstname VARCHAR(255) NOT NULL');
     }
 
