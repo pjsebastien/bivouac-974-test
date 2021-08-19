@@ -49,7 +49,7 @@ crossorigin=""/>
 		<div class="flex mt-8">
 			<a href="{{ path('bivouacs_liste') }}">
 				<button class="bg-gray-100 inline-flex py-3 px-5 rounded-lg items-center hover:bg-gray-200 focus:outline-none">
-					<img class="w-9 h-9" src="galerie/homeSearch.png" alt="">
+					<img class="w-9 h-9" src="galerie/HomeSearch.png" alt="">
 					<span class="ml-4 flex items-start flex-col leading-none">
 					
 					<span class="title-font font-medium">Recherche avancée</span>
@@ -79,12 +79,12 @@ crossorigin=""/>
 	
 <div class="container px-8 pb-12 mx-auto flex flex-wrap lg:px-20" id="content">
 			
-	<div class="flex flex-wrap -m-4">		
+	<div class="flex flex-wrap w-full">		
 	{% for bivouac in bivouacs %}
-		<div class=" w-full xl:w-1/3 sm:w-1/2 p-1 md:p-4 lg:p-6">
+		<div class=" w-full xl:w-1/3 md:w-1/2 p-1 md:p-4 lg:p-6">
 		  <div class="bg-gray-100 p-4  rounded-lg">
 			
-			<img class="h-40 md:h-48 rounded w-full object-cover object-center mb-2" src="{{asset('uploads/' ~ bivouac.images[0].name )|imagine_filter('square')}}" alt="{{bivouac.title}}">
+			<img class="h-40 md:h-48 rounded w-full object-cover object-center mb-2" src="uploads/{{bivouac.images[0].name}}" alt="{{bivouac.title}}">
 			{% for region in bivouac.regions %}
 				<a class="inline-flex items-center h-8 px-2 m-1 text-xs text-white transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-600 float-right" href="#">{{region.name}}</a>
           	{% endfor %}
@@ -288,7 +288,7 @@ crossorigin=""/>
 								
 								
 								let marker = L.marker([bivouac[1].lat, bivouac[1].lon], {icon: icone})
-                            	marker.bindPopup("<div class='flex flex-col text-center'><span class='mt-2 uppercase text-gray-600 font-semibold '>"+bivouac[1].title+ "</span><span class='tracking-widest text-green-500 text-xs font-medium title-font mb-3'>"+bivouac[1].categorie+"</span><a class='inline-flex items-center h-8 px-2 uppercase text-white transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-600 text-center pl-6 w-32 mx-auto' style='color:white;' href='http://127.0.0.1:8000/bivouacs/details/"+bivouac[1].slug+"'>Voir le spot</a><a class='inline-flex items-center h-8 px-2 uppercase text-white transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-600 text-center pl-2 w-36 mx-auto mt-2' style='color:white;'  href='http://google.com/maps/?q="+bivouac[1].lat+","+bivouac[1].lon+"' target='blank'>coordonnées GPS</a></div>"
+                            	marker.bindPopup("<div class='flex flex-col text-center'><span class='mt-2 uppercase text-gray-600 font-semibold '>"+bivouac[1].title+ "</span><span class='tracking-widest text-green-500 text-xs font-medium title-font mb-3'>"+bivouac[1].categorie+"</span><a class='inline-flex items-center h-8 px-2 uppercase text-white transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-600 text-center pl-6 w-32 mx-auto' style='color:white;' href='https://bivouac974.herokuapp.com/bivouacs/details/"+bivouac[1].slug+"'>Voir le spot</a><a class='inline-flex items-center h-8 px-2 uppercase text-white transition-colors duration-150 bg-green-500 rounded-lg focus:shadow-outline hover:bg-green-600 text-center pl-2 w-36 mx-auto mt-2' style='color:white;'  href='http://google.com/maps/?q="+bivouac[1].lat+","+bivouac[1].lon+"' target='blank'>coordonnées GPS</a></div>"
 								);
 								markers.addLayer(marker);
 								mymap.addLayer(markers);
