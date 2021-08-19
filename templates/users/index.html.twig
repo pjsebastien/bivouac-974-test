@@ -89,7 +89,7 @@ endblock %}
                                             <a class="w-full md:w-1/2 xl:w-1/3 mx-auto my-6 justify-center" href="{{path('bivouacs_details', {slug : bivouac.slug})}}">
                                             <div class="flex-row bg-white border-2 border-gray-300 p-1 rounded-md tracking-wide shadow-lg mx-4">
                                                 <div id="header" class="flex items-center"> 
-                                                <img alt="{{bivouac.title}}" class="w-24 rounded-xl border-2 border-gray-300" src="{{asset('uploads/' ~ bivouac.images[0].name )|imagine_filter('square')}}" />
+                                                <img alt="{{bivouac.title}}" class="w-24 rounded-xl border-2 border-gray-300" src="uploads/{{bivouac.images[0].name}}" />
                                                 <div id="header-text" class="leading-5 ml-6 sm">
                                                     <h4 class="text-xl font-semibold">{{bivouac.title|u.truncate(30, '...')}}</h4>
                                                     <h5 class="font-semibold text-green-600">{{bivouac.categories.name}}</h5>
